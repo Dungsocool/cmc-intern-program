@@ -1,12 +1,12 @@
-# 🚀 Buổi 1: Foundation & Project Setup
+# 🚀 Session 1: Foundation & Project Setup
 
-## Mục Tiêu
+## Objectives
 
-- ✅ Setup project structure theo Clean Architecture
-- ✅ Hiểu Go basics và HTTP server
-- ✅ Chạy được Hello World API
+- ✅ Set up project structure according to Clean Architecture
+- ✅ Understand Go basics and HTTP servers
+- ✅ Run a Hello World API successfully
 
-## Nội Dung Code
+## Code Contents
 
 ### 1. Project Structure
 
@@ -16,37 +16,37 @@ session1-foundation/
 │   └── server/
 │       └── main.go          # Entry point - Hello World server
 ├── internal/
-│   ├── model/               # (Empty - chuẩn bị buổi 2)
-│   ├── handler/             # (Empty - chuẩn bị buổi 2)
-│   ├── service/             # (Empty - chuẩn bị buổi 2)
-│   └── storage/             # (Empty - chuẩn bị buổi 2)
+│   ├── model/               # (Empty - preparing for Session 2)
+│   ├── handler/             # (Empty - preparing for Session 2)
+│   ├── service/             # (Empty - preparing for Session 2)
+│   └── storage/             # (Empty - preparing for Session 2)
 ├── go.mod
 └── README.md
 ```
 
 ### 2. Key Concepts
 
-#### HTTP Server trong Go
+#### HTTP Server in Go
 
-- `http.HandleFunc` - register handlers cho routes
-- `http.ListenAndServe` - start server
-- `ResponseWriter` và `Request` - handle HTTP
+- `http.HandleFunc` - register handlers for routes
+- `http.ListenAndServe` - start the server
+- `ResponseWriter` and `Request` - handle HTTP requests/responses
 
 #### JSON Response
 
-- `json.NewEncoder(w).Encode()` - convert Go struct sang JSON
+- `json.NewEncoder(w).Encode()` - convert Go struct to JSON
 - Content-Type header
 
-### 3. Chạy Code
+### 3. Running the Code
 
 ```bash
-# Khởi tạo Go module
+# Initialize Go module
 go mod init mini-asm
 
-# Chạy server
+# Run server
 go run cmd/server/main.go
 
-# Test endpoint (terminal khác)
+# Test endpoint (another terminal)
 curl http://localhost:8080/health
 ```
 
@@ -59,12 +59,12 @@ curl http://localhost:8080/health
 }
 ```
 
-## So Sánh
+## Comparison
 
 ### ❌ Bad Practice (Monolithic)
 
 ```go
-// Tất cả code trong 1 file
+// All code in one file
 func main() {
     http.HandleFunc("/assets", func(w http.ResponseWriter, r *http.Request) {
         // Parse request
@@ -76,14 +76,14 @@ func main() {
 }
 ```
 
-### ✅ Clean Architecture (Preview buổi 2)
+### ✅ Clean Architecture (Preview of Session 2)
 
 ```go
 // Separation of concerns
 handler → service → storage → model
 ```
 
-**→ Buổi 1 setup structure, Buổi 2 implement layers!**
+**→ Session 1 sets up the structure, Session 2 implements the layers!**
 
 ## Resources
 

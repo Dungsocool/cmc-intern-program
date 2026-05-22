@@ -1,95 +1,95 @@
-# 📝 Bài Tập Về Nhà - Sessions 5-7 (Day 3)
+# 📝 Homework - Sessions 5-7 (Day 3)
 
-**Deadline:** Trước ngày thứ 7 tuần sau
-**Cách nộp:** Push lên Git repository cá nhân tại branch homework. Mời dinhmanhtan (dmtangtnd@gmail.com) vào project. Tiếp tục code ở nhánh homework. Tạo pull request từ branch homework vào main. Set reviewer là dinhmanhtan  
-**Note**: Project có thể viết bằng ngôn ngữ khác không bắt buộc phải dùng Go. Nếu sử dụng ngôn ngữ khác cần mô tả cách cài đặt và chạy project
-
----
-
-## 📑 Mục Lục
-
-- [Yêu Cầu Chung](#yêu-cầu-chung)
-- [📤 Nộp Bài](#-nộp-bài)
-- [Bài 1: Mở rộng Scan API (25 điểm)](#bài-1-mở-rộng-scan-api-25-điểm)
-- [Bài 2: Viết Unit Tests (25 điểm)](#bài-2-viết-unit-tests-25-điểm)
-- [Bài 3: Tích hợp Frontend (20 điểm)](#bài-3-tích-hợp-frontend-20-điểm)
-- [Bài 4: CI/CD với GitHub Actions (25 điểm)](#bài-4-cicd-với-github-actions-25-điểm)
-- [Bài 5: Deploy với Docker Compose (15 điểm)](#bài-5-deploy-với-docker-compose-15-điểm)
-- [Bài 6: Tính năng EASM mới (15 điểm) - BONUS 🌟](#bài-6-tính-năng-easm-mới-15-điểm---bonus-)
-- [Bài 7: Deploy lên Cloud VM (20 điểm) - BONUS 🌟](#bài-7-deploy-lên-cloud-vm-20-điểm---bonus-)
-- [Bài 8: Domain & TLS/HTTPS (15 điểm) - BONUS 🌟](#bài-8-domain--tlshttps-15-điểm---bonus-)
-- [Bài 9: Auto Deploy on Merge (15 điểm) - BONUS 🌟](#bài-9-auto-deploy-on-merge-15-điểm---bonus-)
-- [📊 Chấm Điểm](#-chấm-điểm)
-- [💡 Gợi Ý & Tips](#-gợi-ý--tips)
-- [📚 Tài Liệu Tham Khảo](#-tài-liệu-tham-khảo)
+**Deadline:** Before next Saturday
+**Submission Guidelines:** Push to your personal Git repository on the `homework` branch. Invite dinhmanhtan (dmtangtnd@gmail.com) to the project. Continue coding on the `homework` branch. Create a pull request from the `homework` branch into `main`. Set the reviewer to `dinhmanhtan`.
+**Note**: The project can be written in languages other than Go. If using another language, please describe how to install and run the project.
 
 ---
 
-## Yêu Cầu Chung
+## 📑 Table of Contents
 
-- ✅ Code phải chạy được không có lỗi
-- ✅ Follow Clean Architecture như đã học
-- ✅ Có error handling đầy đủ
-- ✅ Test được bằng curl hoặc Postman
-- ✅ Code có comments giải thích logic phức tạp
-- ✅ README.md mô tả cách cài đặt và chạy project
-- ✅ Cập nhật tài liệu api.yml cho những thay đổi
+- [General Requirements](#general-requirements)
+- [📤 Submission](#-submission)
+- [Exercise 1: Extend Scan API (25 points)](#exercise-1-extend-scan-api-25-points)
+- [Exercise 2: Write Unit Tests (25 points)](#exercise-2-write-unit-tests-25-points)
+- [Exercise 3: Frontend Integration (20 points)](#exercise-3-frontend-integration-20-points)
+- [Exercise 4: CI/CD with GitHub Actions (25 points)](#exercise-4-cicd-with-github-actions-25-points)
+- [Exercise 5: Deploy with Docker Compose (15 points)](#exercise-5-deploy-with-docker-compose-15-points)
+- [Exercise 6: New EASM Feature (15 points) - BONUS 🌟](#exercise-6-new-easm-feature-15-points---bonus-)
+- [Exercise 7: Deploy to Cloud VM (20 points) - BONUS 🌟](#exercise-7-deploy-to-cloud-vm-20-points---bonus-)
+- [Exercise 8: Domain & TLS/HTTPS (15 points) - BONUS 🌟](#exercise-8-domain--tlshttps-15-points---bonus-)
+- [Exercise 9: Auto Deploy on Merge (15 points) - BONUS 🌟](#exercise-9-auto-deploy-on-merge-15-points---bonus-)
+- [📊 Grading](#-grading)
+- [💡 Tips & Hints](#-tips--hints)
+- [📚 References](#-references)
 
 ---
 
-## 📤 Nộp Bài
+## General Requirements
 
-### Cần nộp:
+- ✅ Code must run without errors
+- ✅ Follow Clean Architecture as learned
+- ✅ Include full error handling
+- ✅ Testable using curl or Postman
+- ✅ Code has comments explaining complex logic
+- ✅ README.md describes how to install and run the project
+- ✅ Update the api.yml documentation for any changes
 
-**File `SUBMISSION.md`** hoặc **`SUBMISSION.pdf`** gồm:
+---
+
+## 📤 Submission
+
+### Requirements:
+
+**File `SUBMISSION.md`** or **`SUBMISSION.pdf`** containing:
 
 ```markdown
 # Homework Submission - Day 3
 
-**Họ tên:** [Tên của bạn]
+**Full Name:** [Your Name]
 
-## Các bài đã hoàn thành
+## Completed Tasks
 
-- [x] Bài 1: Mở rộng Scan API
-- [x] Bài 2: Viết Unit Tests
-- [x] Bài 3: Tích hợp Frontend
-- [x] Bài 4: CI/CD với GitHub Actions
-- [x] Bài 5: Deploy với Docker Compose
-- [ ] Bài 6: Tính năng EASM mới (Bonus)
-- [ ] Bài 7: Deploy lên Cloud VM (Bonus)
-- [ ] Bài 8: Domain & TLS/HTTPS (Bonus)
-- [ ] Bài 9: Auto Deploy on Merge (Bonus)
+- [x] Exercise 1: Extend Scan API
+- [x] Exercise 2: Write Unit Tests
+- [x] Exercise 3: Frontend Integration
+- [x] Exercise 4: CI/CD with GitHub Actions
+- [x] Exercise 5: Deploy with Docker Compose
+- [ ] Exercise 6: New EASM Feature (Bonus)
+- [ ] Exercise 7: Deploy to Cloud VM (Bonus)
+- [ ] Exercise 8: Domain & TLS/HTTPS (Bonus)
+- [ ] Exercise 9: Auto Deploy on Merge (Bonus)
 
-## Link Repository
+## Repository Link
 
-[Link GitHub repository]
+[GitHub repository link]
 
-## Link Demo (nếu có)
+## Demo Link (if any)
 
-[Link deployed application]
+[Deployed application link]
 ```
 
-Mỗi bài cần 1 file Test screenshots hoặc command outputs chứng minh.
-File này đặt trong thư mục [homeworks/submissions/day3](../submissions/day3)
+Each exercise requires 1 Test screenshots or command outputs file for verification.
+Place this file in the [homeworks/submissions/day3](../submissions/day3) directory.
 
 ---
 
-## Bài 1: Mở rộng Scan API (25 điểm)
+## Exercise 1: Extend Scan API (25 points)
 
-**Yêu cầu:** Thêm các loại scan mới cho hệ thống EASM
+**Requirement:** Add new scan types for the EASM system.
 
-### Existing Scan Types (đã có sẵn)
+### Existing Scan Types
 
-Hệ thống hiện tại hỗ trợ các scan types sau (passive scans - an toàn):
+The current system supports the following passive scans (safe):
 
-| Scan Type    | Mô tả                          | Asset Type |
+| Scan Type    | Description                    | Asset Type |
 | ------------ | ------------------------------ | ---------- |
 | `dns`        | DNS record lookup (A, MX, NS)  | domain     |
 | `whois`      | WHOIS registration information | domain     |
 | `subdomain`  | Subdomain enumeration          | domain     |
 | `cert_trans` | Certificate Transparency logs  | domain     |
 | `asn`        | ASN lookup                     | ip         |
-| `all`        | Chạy tất cả passive scans      | domain     |
+| `all`        | Run all passive scans          | domain     |
 
 ### API Base - Start Scan
 
@@ -125,7 +125,7 @@ Hệ thống hiện tại hỗ trợ các scan types sau (passive scans - an to�
 
 ### Scan Status Values
 
-| Status      | Mô tả                      |
+| Status      | Description                |
 | ----------- | -------------------------- |
 | `pending`   | Job queued but not started |
 | `running`   | Job is executing           |
@@ -135,9 +135,9 @@ Hệ thống hiện tại hỗ trợ các scan types sau (passive scans - an to�
 
 ---
 
-### 1.1 IP Scan (Geolocation & ASN) - MỚI
+### 1.1 IP Scan (Geolocation & ASN) - NEW
 
-Mở rộng scan cho IP assets với thông tin geolocation và ASN.
+Extend scanning for IP assets with geolocation and ASN information.
 
 - **Endpoint:** `POST /assets/{id}/scan`
 - **Request body:**
@@ -192,9 +192,9 @@ Mở rộng scan cho IP assets với thông tin geolocation và ASN.
 }
 ```
 
-### 1.2 Port Scan - MỚI ⚠️
+### 1.2 Port Scan - NEW ⚠️
 
-**⚠️ CẢNH BÁO BẢO MẬT:** Port scan là **ACTIVE SCAN** - chỉ được thực hiện trên hệ thống bạn sở hữu hoặc có quyền scan!
+**⚠️ SECURITY WARNING:** Port scan is an **ACTIVE SCAN** - only execute on systems you own or have explicit permission to scan!
 
 - **Endpoint:** `POST /assets/{id}/scan`
 - **Request body:**
@@ -266,11 +266,11 @@ Mở rộng scan cho IP assets với thông tin geolocation và ASN.
 }
 ```
 
-⚠️ **Yêu cầu bảo mật:**
+⚠️ **Security Requirements:**
 
-- CHỈ scan: `127.0.0.1` (localhost), `10.x.x.x`, `172.16-31.x.x`, `192.168.x.x`
-- KHÔNG scan hệ thống bên ngoài mà không có permission
-- Implement safety check trong code để từ chối scan public IPs
+- ONLY scan: `127.0.0.1` (localhost), `10.x.x.x`, `172.16-31.x.x`, `192.168.x.x`
+- DO NOT scan external systems without permission
+- Implement a safety check in code to refuse scanning public IPs
 
 ### 1.3 SSL/TLS Certificate Scan - (Bonus) ⚠️
 
@@ -402,7 +402,7 @@ Mở rộng scan cho IP assets với thông tin geolocation và ASN.
 
 ### API Endpoints Summary
 
-| Method | Endpoint                  | Mô tả                        |
+| Method | Endpoint                  | Description                  |
 | ------ | ------------------------- | ---------------------------- |
 | POST   | `/assets/{id}/scan`       | Start a scan job             |
 | GET    | `/scan-jobs/{id}`         | Get scan job status          |
@@ -413,14 +413,14 @@ Mở rộng scan cho IP assets với thông tin geolocation và ASN.
 | GET    | `/assets/{id}/whois`      | Get WHOIS for an asset       |
 | GET    | `/assets/{id}/subdomains` | Get subdomains for an asset  |
 
-### Yêu cầu kỹ thuật:
+### Technical Requirements:
 
-- Tạo file scanner mới cho mỗi loại: `ip_scanner.go`, `port_scanner.go`, `ssl_scanner.go`, `tech_scanner.go`
-- Implement interface Scanner cho tất cả
-- Cập nhật `scan_type` enum trong database/model (thêm: `ip`, `port`, `ssl`, `tech`)
-- Handle timeout và errors gracefully
+- Create a new scanner file for each type: `ip_scanner.go`, `port_scanner.go`, `ssl_scanner.go`, `tech_scanner.go`
+- Implement the `Scanner` interface for all of them
+- Update the `scan_type` enum in database/model (add: `ip`, `port`, `ssl`, `tech`)
+- Handle timeouts and errors gracefully
 - Log scan activities
-- Implement safety checks cho active scans (port, ssl)
+- Implement safety checks for active scans (port, ssl)
 
 **Test:**
 
@@ -492,13 +492,13 @@ curl -s "http://localhost:8080/assets/$DOMAIN_ASSET/scans" | jq
 
 ---
 
-## Bài 2: Viết Unit Tests (25 điểm)
+## Exercise 2: Write Unit Tests (25 points)
 
-**Yêu cầu:** Viết comprehensive unit tests cho application
+**Requirement:** Write comprehensive unit tests for the application
 
 ### 2.1 Model Tests
 
-Tạo file `internal/model/asset_test.go`:
+Create file `internal/model/asset_test.go`:
 
 ```go
 func TestAssetValidation(t *testing.T) {
@@ -530,7 +530,7 @@ func TestAssetValidation(t *testing.T) {
 
 ### 2.2 Handler Tests (Bonus)
 
-Tạo file `internal/handler/asset_handler_test.go`:
+Create file `internal/handler/asset_handler_test.go`:
 
 ```go
 func TestCreateAssetHandler(t *testing.T) {
@@ -556,7 +556,7 @@ func TestCreateAssetHandler(t *testing.T) {
 
 ### 2.3 Service Tests (Bonus)
 
-Tạo file `internal/service/asset_service_test.go`:
+Create file `internal/service/asset_service_test.go`:
 
 ```go
 func TestAssetService_Create(t *testing.T) {
@@ -570,7 +570,7 @@ func TestAssetService_Create(t *testing.T) {
 
 ### 2.4 Scanner Tests
 
-Tạo tests cho mỗi scanner type:
+Create tests for each scanner type:
 
 ```go
 func TestDNSScanner_Scan(t *testing.T) {
@@ -583,11 +583,11 @@ func TestDNSScanner_Scan(t *testing.T) {
 }
 ```
 
-### Yêu cầu kỹ thuật:
+### Technical Requirements:
 
-- Bắt buộc viết unit test cho 2.1,2.4
-- Phần 2.2,2.3 sẽ có điểm bonus nếu thực hiện
-- Coverage test lớn sẽ có thêm bonus điểm
+- Unit tests for 2.1 and 2.4 are mandatory
+- Section 2.2 and 2.3 will receive bonus points if completed
+- High test coverage will receive additional bonus points
 
 **Commands:**
 
@@ -611,13 +611,13 @@ go test -bench=. ./...
 
 ---
 
-## Bài 3: Tích hợp Frontend (20 điểm)
+## Exercise 3: Frontend Integration (20 points)
 
-**Yêu cầu:** Kết nối backend API với frontend (có thể sử dụng frontend có sẵn tại session7 hoặc tự build)
+**Requirement:** Connect the backend API with the frontend (you can use the provided frontend in session7 or build your own)
 
-### 3.1 Cấu hình CORS
+### 3.1 CORS Configuration
 
-Thêm CORS middleware vào backend:
+Add CORS middleware to the backend:
 
 ```go
 func CORSMiddleware(next http.Handler) http.Handler {
@@ -636,16 +636,16 @@ func CORSMiddleware(next http.Handler) http.Handler {
 }
 ```
 
-### 3.2 Frontend Features cần hoạt động:
+### 3.2 Frontend Features that must work:
 
-- [ ] Hiển thị danh sách assets
-- [ ] Thêm asset mới
-- [ ] Xóa asset
-- [ ] Khởi tạo scan
-- [ ] Xem kết quả scan
-- [ ] Dashboard thống kê
+- [ ] Display asset list
+- [ ] Add new asset
+- [ ] Delete asset
+- [ ] Initiate a scan
+- [ ] View scan results
+- [ ] Statistics Dashboard
 
-### 3.3 Cấu hình Environment
+### 3.3 Environment Configuration
 
 Frontend `.env`:
 
@@ -675,28 +675,28 @@ npm run dev
 
 **Screenshot requirements:**
 
-- Trang danh sách assets có data
-- Form tạo asset hoạt động
-- Scan results hiển thị đúng
+- Asset list page with data populated
+- Create asset form functioning
+- Scan results displayed correctly
 
 ---
 
-## Bài 4: CI/CD với GitHub Actions (25 điểm)
+## Exercise 4: CI/CD with GitHub Actions (25 points)
 
-**Yêu cầu:** Thiết lập CI/CD pipeline với các job bảo mật. Có thể chọn thêm một job bảo mật bất kỳ
+**Requirement:** Establish a CI/CD pipeline with security jobs. You can select any security job of your choice.
 
-### 4.1 Cấu trúc Workflow
+### 4.1 Workflow Structure
 
-Tạo/cập nhật file `.github/workflows/ci.yml`:
-Tham khảo [./github/workflows/session7-deployment.yml](./github/workflows/session7-deployment.ym)
+Create/update file `.github/workflows/ci.yml`:
+Refer to [./github/workflows/session7-deployment.yml](./github/workflows/session7-deployment.ym)
 
 ### 4.2 Security Scan Tools
 
 **Gosec** - Go Security Scanner:
 
-- Phát hiện SQL injection
-- Phát hiện hardcoded credentials
-- Phát hiện unsafe operations
+- Detect SQL injection
+- Detect hardcoded credentials
+- Detect unsafe operations
 
 **Trivy** - Vulnerability Scanner:
 
@@ -706,9 +706,9 @@ Tham khảo [./github/workflows/session7-deployment.yml](./github/workflows/sess
 
 **Gitleaks** - Secret Detection:
 
-- Phát hiện API keys
-- Phát hiện passwords
-- Phát hiện tokens
+- Detect API keys
+- Detect passwords
+- Detect tokens
 
 **TruffleHog** - Secret Scanner:
 
@@ -719,25 +719,25 @@ Tham khảo [./github/workflows/session7-deployment.yml](./github/workflows/sess
 ### Test:
 
 ```bash
-# Trigger workflow bằng push commit
-**Lưu ý**: Cần set rule bắt buộc pass các cicd job mới được merge request tại phần Setting -> Rules -> Rulesets
-Tạo pull request vào main
+# Trigger workflow by pushing a commit
+**Note**: You must set a rule forcing CI/CD jobs to pass before a merge request can be merged in Settings -> Rules -> Rulesets
+Create a pull request into main
 
-# Xem results tại:
+# View results at:
 # https://github.com/<username>/<repo>/actions
 ```
 
 **Screenshot requirements:**
 
 - GitHub Actions workflow running
-- All jobs passed (green checks)
+- All jobs passed (green checkmarks)
 - Security scan results
 
 ---
 
-## Bài 5: Deploy với Docker Compose (15 điểm)
+## Exercise 5: Deploy with Docker Compose (15 points)
 
-**Yêu cầu:** Deploy full application stack bằng Docker Compose
+**Requirement:** Deploy the full application stack using Docker Compose
 
 **Screenshot requirements:**
 
@@ -747,37 +747,39 @@ Tạo pull request vào main
 
 ---
 
-## Bài 6: Tính năng EASM mới (15 điểm) - BONUS 🌟
+## Exercise 6: New EASM Feature (15 points) - BONUS 🌟
 
-**Yêu cầu:** Implement thêm tính năng nâng cao cho EASM
+**Requirement:** Implement advanced features for EASM
 
-### Gợi ý tính năng:
+### Feature Suggestions:
 
 #### 6.1 Scheduled Scans
 
-Tự động scan assets theo schedule
+Automatically scan assets according to a schedule
 
 #### 6.2 Asset Groups/Tags
 
-Nhóm assets theo tags:
+Group assets by tags
 
 #### 6.3 Alerts/Notifications
 
-Cảnh báo khi phát hiện issues:
+Alert on issues detected
 
 #### 6.4 Scan Comparison
 
-So sánh kết quả scan theo thời gian:
+Compare scan results over time
 
 #### 6.5 Export Reports
 
-Export scan results dạng PDF/CSV:
+Export scan results in PDF/CSV format
 
-## Bài 7: Deploy lên Cloud VM (20 điểm) - BONUS 🌟
+---
 
-**Yêu cầu:** Deploy application lên cloud VM thật
+## Exercise 7: Deploy to Cloud VM (20 points) - BONUS 🌟
 
-### 7.1 Các Cloud Provider Options
+**Requirement:** Deploy application onto a real cloud VM
+
+### 7.1 Cloud Provider Options
 
 | Provider         | Free Tier           | Link                               |
 | ---------------- | ------------------- | ---------------------------------- |
@@ -792,7 +794,7 @@ Export scan results dạng PDF/CSV:
 ### 7.2 VM Setup Steps
 
 ```bash
-# 1. SSH vào VM
+# 1. SSH into VM
 ssh -i your-key.pem ubuntu@your-vm-ip
 
 # 2. Update system
@@ -840,18 +842,18 @@ curl http://your-vm-ip:8080/health
 
 ---
 
-## Bài 8: Domain & TLS/HTTPS (15 điểm) - BONUS 🌟
+## Exercise 8: Domain & TLS/HTTPS (15 points) - BONUS 🌟
 
-**Yêu cầu:** Gắn domain name và cài đặt SSL certificate. Có thể tự mua domain, hoặc nếu cần subdomain liên hệ dinhmanhtan
+**Requirement:** Map domain name and set up SSL certificate. You can purchase a domain or contact dinhmanhtan for a subdomain.
 
 ### 8.1 Get Free Domain
 
-**Freenom domains (nếu available):**
+**Freenom domains (if available):**
 
 - .tk, .ml, .ga, .cf domains
 - https://www.freenom.com/
 
-**Hoặc sử dụng subdomain services:**
+**Or use subdomain services:**
 
 - DuckDNS: https://www.duckdns.org/
 - No-IP: https://www.noip.com/
@@ -864,7 +866,7 @@ A Record:    yourdomain.com    →  YOUR_VM_IP
 A Record:    www.yourdomain.com → YOUR_VM_IP
 ```
 
-### 8.3 TLS với Let's Encrypt + Nginx
+### 8.3 TLS with Let's Encrypt + Nginx
 
 **Option 1: Certbot (Recommended)**
 
@@ -943,9 +945,9 @@ openssl s_client -connect yourdomain.com:443 -servername yourdomain.com
 
 ---
 
-## Bài 9: Auto Deploy on Merge (15 điểm) - BONUS 🌟
+## Exercise 9: Auto Deploy on Merge (15 points) - BONUS 🌟
 
-**Yêu cầu:** CI/CD tự động deploy mỗi lần merge vào main
+**Requirement:** Auto deploy via CI/CD every time code is merged into `main`
 
 ### 9.1 GitHub Actions Workflow
 
@@ -984,13 +986,13 @@ jobs:
 
 ### 9.2 GitHub Secrets Setup
 
-Vào Repository Settings → Secrets and variables → Actions:
+Go to Repository Settings → Secrets and variables → Actions:
 
 | Secret Name       | Description                   |
 | ----------------- | ----------------------------- |
-| `SERVER_HOST`     | IP hoặc domain của server     |
+| `SERVER_HOST`     | IP or domain of the server    |
 | `SERVER_USER`     | SSH username (e.g., ubuntu)   |
-| `SSH_PRIVATE_KEY` | Private key để SSH vào server |
+| `SSH_PRIVATE_KEY` | Private key to SSH to server  |
 
 ### 9.3 Alternative: Self-hosted Runner
 
@@ -1003,7 +1005,7 @@ tar xzf ./actions-runner-linux-x64.tar.gz
 ./run.sh
 ```
 
-Workflow với self-hosted runner:
+Workflow with self-hosted runner:
 
 ```yaml
 jobs:
@@ -1060,27 +1062,27 @@ git push origin test-deploy
 
 ---
 
-## 📊 Chấm Điểm
+## 📊 Grading
 
-| Bài Tập                     | Điểm    | Bắt Buộc    |
+| Exercise                    | Score   | Mandatory   |
 | --------------------------- | ------- | ----------- |
-| Bài 1: Mở rộng Scan API     | 25      | ✅ Bắt buộc |
-| Bài 2: Viết Unit Tests      | 25      | ✅ Bắt buộc |
-| Bài 3: Tích hợp Frontend    | 20      | ✅ Bắt buộc |
-| Bài 4: CI/CD GitHub Actions | 25      | ✅ Bắt buộc |
-| Bài 5: Deploy Docker        | 15      | ✅ Bắt buộc |
-| Bài 6: Tính năng EASM mới   | 15      | 🌟 Bonus    |
-| Bài 7: Deploy Cloud VM      | 20      | 🌟 Bonus    |
-| Bài 8: Domain & TLS         | 15      | 🌟 Bonus    |
-| Bài 9: Auto Deploy          | 15      | 🌟 Bonus    |
-| **Tổng bắt buộc**           | **110** |             |
-| **Tổng có bonus**           | **175** |             |
+| Exercise 1: Extend Scan API | 25      | ✅ Yes      |
+| Exercise 2: Write Unit Tests| 25      | ✅ Yes      |
+| Exercise 3: Frontend Integr.| 20      | ✅ Yes      |
+| Exercise 4: CI/CD GH Actions| 25      | ✅ Yes      |
+| Exercise 5: Deploy Docker   | 15      | ✅ Yes      |
+| Exercise 6: New EASM Feature| 15      | 🌟 Bonus    |
+| Exercise 7: Deploy Cloud VM | 20      | 🌟 Bonus    |
+| Exercise 8: Domain & TLS    | 15      | 🌟 Bonus    |
+| Exercise 9: Auto Deploy     | 15      | 🌟 Bonus    |
+| **Total Mandatory**         | **110** |             |
+| **Total with Bonuses**      | **175** |             |
 
 ---
 
-## 💡 Gợi Ý & Tips
+## 💡 Tips & Hints
 
-### SSL Certificate Check trong Go:
+### SSL Certificate Check in Go:
 
 ```go
 import (
@@ -1164,7 +1166,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 ---
 
-## 📚 Tài Liệu Tham Khảo
+## 📚 References
 
 ### Testing
 
@@ -1252,21 +1254,21 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 ---
 
-## 🚀 Bonus Challenges (Nâng cao)
+## 🚀 Bonus Challenges (Advanced)
 
-1. **Kubernetes Deployment:** Deploy lên K8s cluster
-2. **Monitoring:** Thêm Prometheus + Grafana
-3. **Logging:** Centralized logging với ELK Stack
-4. **API Gateway:** Sử dụng Kong hoặc Nginx ingress
-5. **Load Balancing:** Cài đặt multiple backend replicas
-6. **Database Backup:** Automated backup cho PostgreSQL
+1. **Kubernetes Deployment:** Deploy to a K8s cluster
+2. **Monitoring:** Add Prometheus + Grafana
+3. **Logging:** Centralized logging with ELK Stack
+4. **API Gateway:** Use Kong or Nginx ingress
+5. **Load Balancing:** Set up multiple backend replicas
+6. **Database Backup:** Automated backup for PostgreSQL
 7. **Rate Limiting:** Implement rate limiting middleware
 8. **API Documentation:** Generate OpenAPI/Swagger docs
 9. **WebSocket Support:** Real-time scan status updates
-10. **Email Notifications:** Gửi email khi scan complete
+10. **Email Notifications:** Send email upon scan completion
 
 ---
 
-**Chúc các bạn làm bài tốt! Có thắc mắc hỏi trên group nhé! 🚀**
+**Good luck with your homework! Ask in the group if you have any questions! 🚀**
 
 ---

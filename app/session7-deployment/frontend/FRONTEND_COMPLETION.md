@@ -1,20 +1,20 @@
-# 🎉 Frontend React Demo - Hoàn Thành!
+# 🎉 Frontend React Demo - Completed!
 
-## ✅ Tổng Quan Dự Án
+## ✅ Project Overview
 
-Đã thiết kế và xây dựng hoàn chỉnh **React frontend** cho EASM platform với đầy đủ tính năng:
+Designed and built a fully functional **React frontend** for the EASM platform with comprehensive features:
 
-### 📁 Cấu Trúc Dự Án
+### 📁 Project Structure
 
 ```
 session6-testing/
-├── frontend/                           ✅ MỚI - React SPA
+├── frontend/                           ✅ NEW - React SPA
 │   ├── src/
-│   │   ├── pages/                     4 pages hoàn chỉnh
-│   │   │   ├── Dashboard.jsx          📊 Trang chủ với stats
-│   │   │   ├── Assets.jsx             💾 Quản lý assets (CRUD)
+│   │   ├── pages/                     4 complete pages
+│   │   │   ├── Dashboard.jsx          📊 Home page with stats
+│   │   │   ├── Assets.jsx             💾 Asset management (CRUD)
 │   │   │   ├── Scanning.jsx           🔍 Scanning operations
-│   │   │   └── Results.jsx            📈 Hiển thị kết quả
+│   │   │   └── Results.jsx            📈 Result display
 │   │   ├── services/
 │   │   │   └── api.js                 🔌 API integration layer
 │   │   ├── App.jsx                    📱 Main app + routing
@@ -30,10 +30,9 @@ session6-testing/
 ├── start-demo.ps1                     🚀 Quick start script
 ├── FULL_STACK_GUIDE.md                📚 Complete guide
 └── api.yml                            📝 OpenAPI spec
-
 ```
 
-## 🎯 Tính Năng Đã Hoàn Thành
+## 🎯 Completed Features
 
 ### 1. Dashboard Page (`/`)
 
@@ -45,81 +44,81 @@ session6-testing/
 
 ### 2. Assets Page (`/assets`)
 
-✅ **List assets** với pagination  
-✅ **Filter** theo type (domain, ip, service)  
-✅ **Filter** theo status (active, inactive)  
+✅ **List assets** with pagination  
+✅ **Filter** by type (domain, ip, service)  
+✅ **Filter** by status (active, inactive)  
 ✅ **Search** functionality  
-✅ **Create** asset modal với validation  
+✅ **Create** asset modal with validation  
 ✅ **Edit** asset inline  
-✅ **Delete** với confirmation  
-✅ Icon hiển thị theo loại asset  
-✅ Empty state khi chưa có data
+✅ **Delete** with confirmation  
+✅ Icon displayed based on asset type  
+✅ Empty state when no data exists
 
 ### 3. Scanning Page (`/scanning`)
 
 ✅ **Select asset** dropdown  
-✅ **Choose scan type** (8 loại: dns, whois, subdomain, etc.)  
-✅ **Start scan** với 1 click  
+✅ **Choose scan type** (8 types: dns, whois, subdomain, cert_trans, asn, etc.)  
+✅ **Start scan** with 1 click  
 ✅ **Active scan warning** (port, ssl)  
-✅ **Real-time updates** (auto-refresh mỗi 5s)  
-✅ **Scan history** với status tracking  
+✅ **Real-time updates** (auto-refresh every 5s)  
+✅ **Scan history** with status tracking  
 ✅ Status icons (pending, running, completed, failed)  
 ✅ Duration calculation
 
 ### 4. Results Page (`/results`)
 
-✅ **Select asset** và result type  
+✅ **Select asset** and result type  
 ✅ **View all results** (DNS + WHOIS + Subdomains)  
 ✅ **Filter by type**: DNS only, Subdomains only, WHOIS only  
-✅ **DNS records table** với type, name, value, TTL  
-✅ **Subdomains table** với source và active status  
-✅ **WHOIS viewer** với formatted data  
-✅ **Raw data display** cho debugging
+✅ **DNS records table** with type, name, value, TTL  
+✅ **Subdomains table** with source and active status  
+✅ **WHOIS viewer** with formatted data  
+✅ **Raw data display** for debugging
 
 ## 🎨 UI/UX Features
 
 ### Design System
 
-✅ **CSS Variables** cho theming  
+✅ **CSS Variables** for theming  
 ✅ **Utility classes** (flex, grid, spacing)  
 ✅ **Responsive design** (mobile-friendly)  
-✅ **Clean layout** với consistent spacing  
+✅ **Clean layout** with consistent spacing  
 ✅ **Modern color palette** (primary, success, danger, etc.)
 
 ### Components
 
-✅ **Navigation bar** với active state  
+✅ **Navigation bar** with active state  
 ✅ **Buttons** (primary, secondary, danger, success)  
-✅ **Cards** với header/body structure  
-✅ **Tables** với hover effects  
+✅ **Cards** with header/body structure  
+✅ **Tables** with hover effects  
 ✅ **Modals** (create/edit assets)  
-✅ **Badges** cho status/type display  
-✅ **Loading states** với spinner  
-✅ **Empty states** với helpful messages  
+✅ **Badges** for status/type display  
+✅ **Loading states** with spinner  
+✅ **Empty states** with helpful messages  
 ✅ **Alerts** (success, error, warning, info)  
 ✅ **Pagination** controls
 
 ### User Experience
 
-✅ **Loading indicators** trên mọi async operations  
-✅ **Error handling** với user-friendly messages  
-✅ **Success notifications** sau actions  
-✅ **Confirmation dialogs** cho destructive actions  
-✅ **Auto-refresh** cho scan status (polling)  
-✅ **Responsive forms** với validation
+✅ **Loading indicators** on all async operations  
+✅ **Error handling** with user-friendly messages  
+✅ **Success notifications** after actions  
+✅ **Confirmation dialogs** for destructive actions  
+✅ **Auto-refresh** for scan status (polling)  
+✅ **Responsive forms** with validation
 
 ## 🔌 API Integration
 
 ### Service Layer (`src/services/api.js`)
 
-✅ **Axios client** với base configuration  
-✅ **Proxy setup** through Vite (tránh CORS)  
-✅ **Error interceptor** cho centralized error handling
+✅ **Axios client** with base configuration  
+✅ **Proxy setup** through Vite (avoiding CORS)  
+✅ **Error interceptor** for centralized error handling
 
 ### API Methods
 
 ✅ `healthCheck()` - System health  
-✅ `assetsAPI.list()` - List với filters & pagination  
+✅ `assetsAPI.list()` - List with filters & pagination  
 ✅ `assetsAPI.create()` - Create asset  
 ✅ `assetsAPI.update()` - Update asset  
 ✅ `assetsAPI.delete()` - Delete asset  
@@ -171,23 +170,23 @@ session6-testing/
 - Security features
 - Deployment guide
 
-## 🚀 Cách Chạy Demo
+## 🚀 How to Run the Demo
 
-### Option 1: Script Tự Động (Windows)
+### Option 1: Automated Script (Windows)
 
 ```powershell
-# Chạy script tự động start everything
+# Run script to automatically start everything
 .\start-demo.ps1
 ```
 
-Script sẽ:
+The script will:
 
 1. ✅ Check prerequisites (Go, Node, Docker)
 2. ✅ Start Docker services (PostgreSQL)
 3. ✅ Install frontend dependencies
-4. ✅ Start backend trong window riêng
-5. ✅ Start frontend trong window riêng
-6. ✅ Mở browser tự động
+4. ✅ Start backend in a separate window
+5. ✅ Start frontend in a separate window
+6. ✅ Automatically open the browser
 
 ### Option 2: Manual
 
@@ -217,27 +216,27 @@ http://localhost:3000
 
 ### 1️⃣ Create Assets
 
-1. Vào **Assets** page
+1. Go to **Assets** page
 2. Click "Add Asset"
-3. Nhập:
+3. Enter:
    - Name: `example.com`
    - Type: `domain`
-4. Save → Asset xuất hiện trong table
+4. Save → Asset appears in table
 
 ### 2️⃣ Run Scans
 
-1. Vào **Scanning** page
-2. Chọn asset vừa tạo
-3. Chọn scan type: `dns` (safe, passive)
+1. Go to **Scanning** page
+2. Select the newly created asset
+3. Select scan type: `dns` (safe, passive)
 4. Click "Start Scan"
-5. Quan sát real-time updates (pending → running → completed)
+5. Observe real-time updates (pending → running → completed)
 
 ### 3️⃣ View Results
 
-1. Vào **Results** page
-2. Chọn asset
-3. Xem:
-   - **All Results** - Tất cả data
+1. Go to **Results** page
+2. Select asset
+3. View:
+   - **All Results** - All data
    - **DNS** - A, AAAA, MX records
    - **Subdomains** - Discovered domains
    - **WHOIS** - Registration info
@@ -246,13 +245,13 @@ http://localhost:3000
 
 ### Dashboard
 
-- Clean stats với icons
+- Clean stats with icons
 - Feature overview
 - Quick start guide
 
 ### Assets Management
 
-- Table view với actions
+- Table view with actions
 - Filter & search bar
 - Create/edit modal
 - Status badges
@@ -261,7 +260,7 @@ http://localhost:3000
 
 - Asset selector
 - Scan type dropdown
-- Warning cho active scans
+- Warning for active scans
 - Real-time job tracking
 
 ### Results Viewer
@@ -275,18 +274,18 @@ http://localhost:3000
 
 ### React Best Practices
 
-✅ **Functional components** với hooks  
-✅ **useState** cho local state  
-✅ **useEffect** cho side effects  
+✅ **Functional components** with hooks  
+✅ **useState** for local state  
+✅ **useEffect** for side effects  
 ✅ **Proper cleanup** (clearInterval)  
 ✅ **Component composition**  
 ✅ **Props drilling avoided**
 
 ### Performance
 
-✅ **Auto-refresh** chỉ khi cần (selected asset)  
-✅ **Cleanup intervals** trong useEffect  
-✅ **Conditional rendering** tối ưu  
+✅ **Auto-refresh** only when needed (selected asset)  
+✅ **Cleanup intervals** in useEffect  
+✅ **Optimized conditional rendering**  
 ✅ **Lazy loading ready** (code splitting)
 
 ### Code Quality
@@ -308,12 +307,12 @@ http://localhost:3000
 
 ## 🎯 Learning Outcomes
 
-Students học được:
+Students learn:
 
 1. **React Fundamentals**
    - Components, Props, State
    - Hooks (useState, useEffect)
-   - Routing với React Router
+   - Routing with React Router
    - Form handling
 
 2. **API Integration**
@@ -337,7 +336,7 @@ Students học được:
 
 ### Core Features
 
-- [x] Dashboard với statistics
+- [x] Dashboard with statistics
 - [x] Asset CRUD operations
 - [x] Scanning operations
 - [x] Results visualization
@@ -374,14 +373,14 @@ Students học được:
 - [x] API examples
 - [x] Troubleshooting
 
-## 🎉 Kết Luận
+## 🎉 Conclusion
 
-✅ **Frontend hoàn chỉnh** với đầy đủ tính năng EASM  
-✅ **Modern React** practices và architecture  
-✅ **Professional UI/UX** với responsive design  
-✅ **Complete integration** với Go backend  
+✅ **Complete frontend with full EASM features**  
+✅ **Modern React** practices and architecture  
+✅ **Professional UI/UX** with responsive design  
+✅ **Complete integration** with Go backend  
 ✅ **Production-ready** code quality  
-✅ **Comprehensive documentation** cho learning
+✅ **Comprehensive documentation** for learning
 
 **Ready to demo!** 🚀
 
@@ -396,4 +395,4 @@ Students học được:
 
 ---
 
-Built with ❤️ for CMC Intern Program - Session 6: Testing & Quality Assurance
+Built with ❤️ for Backend Internship Program - Session 6: Testing & Quality Assurance

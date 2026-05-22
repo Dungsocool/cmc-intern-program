@@ -1,4 +1,4 @@
-# 🔍 Buổi 4: Advanced API Features
+# 🔍 Session 4: Advanced API Features
 
 ## ⚡ Quick Start
 
@@ -34,7 +34,7 @@ curl "http://localhost:8080/assets?type=domain&search=google&page=2&sort_by=name
 
 ---
 
-## Mục Tiêu
+## Objectives
 
 - ✅ **Pagination**: Handle large datasets efficiently
 - ✅ **Advanced Filtering**: Multiple filters combined
@@ -43,7 +43,7 @@ curl "http://localhost:8080/assets?type=domain&search=google&page=2&sort_by=name
 - ✅ **Input Validation**: Comprehensive type-specific validation
 - ✅ **Error Handling**: Clear, actionable error messages
 
-## So Sánh với Session 3
+## Comparison with Session 3
 
 | Feature          | Session 3                   | Session 4 (Advanced)                  |
 | ---------------- | --------------------------- | ------------------------------------- |
@@ -260,7 +260,7 @@ curl "http://localhost:8080/assets?page=1&page_size=20&type=domain&status=active
 
 - `page` (int, default: 1): Page number
 - `page_size` (int, default: 20, max: 100): Items per page
-- `type` (string): Filter by type (domain,ip, service)
+- `type` (string): Filter by type (domain, ip, service)
 - `status` (string): Filter by status (active, inactive)
 - `search` (string): Search in name field
 - `sort_by` (string): Sort field (name, type, status, created_at, updated_at)
@@ -703,23 +703,8 @@ Students should be able to:
 ---
 
 **Next Session:** Testing & Quality (Unit tests, integration tests, mocks)
-"updated_at": true,
-}
 
-    if !validSortFields[sortBy] {
-        sortBy = "created_at"
-    }
-
-    if sortOrder != "asc" && sortOrder != "desc" {
-        sortOrder = "desc"
-    }
-
-    query := fmt.Sprintf("SELECT * FROM assets ORDER BY %s %s", sortBy, sortOrder)
-    // ...
-
-}
-
-````
+---
 
 ### 3. Advanced Validation
 
@@ -768,7 +753,7 @@ func isDomainValid(domain string) bool {
 func isIPValid(ip string) bool {
     return net.ParseIP(ip) != nil
 }
-````
+```
 
 ### 4. Complex Filtering
 

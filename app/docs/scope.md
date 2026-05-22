@@ -1,43 +1,43 @@
 # Scope
 
-Phiên bản hiện tại là MVP (Minimum Viable Product) được xây dựng trong 6 buổi học (3 tuần, mỗi tuần 2 buổi).
+The current version is an MVP (Minimum Viable Product) built across 6 sessions (3 weeks, 2 sessions per week).
 
-**Buổi 1: Foundation & Theory**
+**Session 1: Foundation & Theory**
 
 - Software Development Lifecycle
-- Git và version control
+- Git and version control
 - Go language fundamentals
-- Project structure và best practices
+- Project structure and best practices
 
-**Buổi 2: API Development Basics**
+**Session 2: API Development Basics**
 
 - RESTful API design
-- HTTP server với Go
+- HTTP server with Go
 - In-memory storage
 - Basic CRUD operations (Create, Read)
 
-**Buổi 3: Database Integration**
+**Session 3: Database Integration**
 
 - Database design
 - PostgreSQL/MySQL integration
 - Data persistence
-- Migration và seeding
+- Migration and seeding
 
-**Buổi 4: Advanced Features**
+**Session 4: Advanced Features**
 
 - Complete CRUD (Update, Delete)
-- Filtering và searching
+- Filtering and searching
 - Pagination
 - Input validation
 
-**Buổi 5: Quality Assurance**
+**Session 5: Quality Assurance**
 
 - Unit testing
 - Integration testing
 - Error handling patterns
-- Logging và monitoring
+- Logging and monitoring
 
-**Buổi 6: Integration & Deployment**
+**Session 6: Integration & Deployment**
 
 - Simple frontend integration
 - API documentation

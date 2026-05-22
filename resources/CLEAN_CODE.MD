@@ -5,53 +5,53 @@
 
 ---
 
-## 📋 MỤC LỤC
+## 📋 TABLE OF CONTENTS
 
-1. [**NGUYÊN TẮC CỐT LÕI**](#1-nguyên-tắc-cốt-lõi)
-   - [1.1 Đặt Tên Có Ý Nghĩa](#11-đặt-tên-có-ý-nghĩa)
-   - [1.2 Function Phải Nhỏ Gọn](#12-function-phải-nhỏ-gọn)
-   - [1.3 Đừng Lặp Lại Code (DRY)](#13-đừng-lặp-lại-code-dry)
-   - [1.4 Xử Lý Error Là Một Việc Riêng](#14-xử-lý-error-là-một-việc-riêng)
-   - [1.5 Comment Giải Thích TẠI SAO, Không Phải LÀ GÌ](#15-comment-giải-thích-tại-sao-không-phải-là-gì)
+1. [**CORE PRINCIPLES**](#1-core-principles)
+   - [1.1 Meaningful Names](#11-meaningful-names)
+   - [1.2 Functions Should Be Compact](#12-functions-should-be-compact)
+   - [1.3 Don't Repeat Yourself (DRY)](#13-dont-repeat-yourself-dry)
+   - [1.4 Error Handling is a Single Responsibility](#14-error-handling-is-a-single-responsibility)
+   - [1.5 Comments Should Explain WHY, Not WHAT](#15-comments-should-explain-why-not-what)
 
-2. [**BEST PRACTICES CHO GO**](#2-best-practices-cho-go)
-   - [2.1 Thiết Kế Package](#21-thiết-kế-package)
-   - [2.2 Xử Lý Error](#22-xử-lý-error)
-   - [2.3 Thiết Kế Interface](#23-thiết-kế-interface)
-   - [2.4 Thiết Kế Struct](#24-thiết-kế-struct)
+2. [**BEST PRACTICES FOR GO**](#2-best-practices-for-go)
+   - [2.1 Package Design](#21-package-design)
+   - [2.2 Error Handling](#22-error-handling)
+   - [2.3 Interface Design](#23-interface-design)
+   - [2.4 Struct Design](#24-struct-design)
    - [2.5 Testing](#25-testing)
 
-3. [**CLEAN CODE THEO LAYERS**](#3-clean-code-theo-layers)
+3. [**CLEAN CODE BY LAYERS**](#3-clean-code-by-layers)
    - [Handler Layer](#handler-layer)
    - [Service Layer](#service-layer)
    - [Storage Layer](#storage-layer)
 
-4. [**CODE SMELLS CẦN TRÁNH**](#4-code-smells-cần-tránh)
+4. [**CODE SMELLS TO AVOID**](#4-code-smells-to-avoid)
 
-5. [**CHECKLIST KHI REFACTOR**](#5-checklist-khi-refactor)
+5. [**REFACTORING CHECKLIST**](#5-refactoring-checklist)
 
-6. [**VÍ DỤ TRƯỚC & SAU**](#6-ví-dụ-trước--sau)
+6. [**BEFORE & AFTER EXAMPLES**](#6-before--after-examples)
 
-7. [**THÓI QUEN HÀNG NGÀY**](#7-thói-quen-hàng-ngày)
+7. [**DAILY HABITS**](#7-daily-habits)
 
-8. [**ĐIỂM CHÍNH CẦN NHỚ**](#-điểm-chính-cần-nhớ)
+8. [**KEY TAKEAWAYS**](#8-key-takeaways)
 
-9. [**TÀI LIỆU THAM KHẢO**](#-tài-liệu-tham-khảo)
+9. [**REFERENCES**](#9-references)
 
 ---
 
-## 1. NGUYÊN TẮC CỐT LÕI
+## 1. CORE PRINCIPLES
 
-### 1.1 Đặt Tên Có Ý Nghĩa
+### 1.1 Meaningful Names
 
-**Quy tắc:**
+**Rules:**
 
-- Tên phải reveal intent - thể hiện ý định
-- Tránh disinformation - thông tin sai lệch
-- Có thể phát âm và search được
-- Không dùng abbreviation không cần thiết
+- Names must reveal intent
+- Avoid disinformation
+- Should be pronounceable and searchable
+- Do not use unnecessary abbreviations
 
-**Ví dụ:**
+**Examples:**
 
 ```go
 // ❌ Bad
@@ -62,19 +62,19 @@ var elapsedTimeInDays int
 var daysSinceCreation int
 ```
 
-### 1.2 Function Phải Nhỏ Gọn
+### 1.2 Functions Should Be Compact
 
-**Quy tắc:**
+**Rules:**
 
-- Function chỉ làm MỘT việc
-- Độ dài lý tưởng: 5-15 dòng
-- Level of abstraction phải nhất quán
-- Nếu function có nhiều hơn 3-4 parameters → xem xét dùng struct
+- A function should do only ONE thing
+- Ideal length: 5-15 lines
+- Level of abstraction must be consistent
+- If a function has more than 3-4 parameters, consider using a struct
 
-**Ví dụ:**
+**Examples:**
 
 ```go
-// ❌ Bad: Làm quá nhiều việc
+// ❌ Bad: Does too many things
 func ProcessOrder(orderId, userId, productId, qty int, addr string) error {
     // Validate user
     // Check inventory
@@ -97,24 +97,24 @@ func ProcessOrder(order Order) error {
 }
 ```
 
-### 1.3 Đừng Lặp Lại Code (DRY)
+### 1.3 Don't Repeat Yourself (DRY)
 
-**Quy tắc:**
+**Rules:**
 
-- Mỗi piece of knowledge chỉ xuất hiện một lần
-- Duplicate code là nguồn gốc của bugs
-- Refactor khi thấy pattern lặp lại
+- Every piece of knowledge must have a single representation
+- Duplicate code is the root of all bugs
+- Refactor when you see repeating patterns
 
-### 1.4 Xử Lý Error Là Một Việc Riêng
+### 1.4 Error Handling is a Single Responsibility
 
-**Quy tắc:**
+**Rules:**
 
-- Function xử lý error hoặc làm một việc khác, không cả hai
-- Không ignore errors
-- Không return nil khi có thể return error
-- Use error wrapping để preserve context
+- A function should either handle an error or do one thing, not both
+- Never ignore errors
+- Do not return nil when you should return an error
+- Use error wrapping to preserve context
 
-**Ví dụ:**
+**Examples:**
 
 ```go
 // ✅ Good
@@ -132,16 +132,16 @@ func CreateAsset(name, assetType string) (*Asset, error) {
 }
 ```
 
-### 1.5 Comment Giải Thích TẠI SAO, Không Phải LÀ GÌ
+### 1.5 Comments Should Explain WHY, Not WHAT
 
-**Quy tắc:**
+**Rules:**
 
-- Code tốt là self-documenting
-- Comment giải thích business logic, quyết định kiến trúc
-- Tránh comment redundant
-- Update comment khi update code
+- Good code is self-documenting
+- Comments should explain business logic and architectural decisions
+- Avoid redundant comments
+- Update comments when updating code
 
-**Ví dụ:**
+**Examples:**
 
 ```go
 // ❌ Bad: Obvious
@@ -160,27 +160,27 @@ for _, asset := range inactiveAssets {
 
 ---
 
-## 2. BEST PRACTICES CHO GO
+## 2. BEST PRACTICES FOR GO
 
-### 2.1 Thiết Kế Package
+### 2.1 Package Design
 
 - Organize by feature/domain, not by type
-- Package name nên ngắn, lowercase, no underscore
+- Package name should be short, lowercase, and have no underscores
 - Avoid util/common packages
 
-### 2.2 Xử Lý Error
+### 2.2 Error Handling
 
-- Return errors, đừng panic (except trong init hoặc unrecoverable)
-- Use `errors.Is()` và `errors.As()` để check error types
-- Wrap errors với context: `fmt.Errorf("operation failed: %w", err)`
+- Return errors, do not panic (except in init or unrecoverable states)
+- Use `errors.Is()` and `errors.As()` to check error types
+- Wrap errors with context: `fmt.Errorf("operation failed: %w", err)`
 
-### 2.3 Thiết Kế Interface
+### 2.3 Interface Design
 
 - Accept interfaces, return structs
-- Interface nên nhỏ (1-3 methods is ideal)
-- Define interface ở nơi sử dụng, không phải implement
+- Interfaces should be small (1-3 methods is ideal)
+- Define interface where it is consumed, not where it is implemented
 
-**Ví dụ:**
+**Examples:**
 
 ```go
 // ✅ Good: Small, focused interface
@@ -200,11 +200,11 @@ func ProcessAsset(store Storage, id string) error {
 }
 ```
 
-### 2.4 Thiết Kế Struct
+### 2.4 Struct Design
 
 - Zero value should be useful
-- Provide constructor functions cho complex initialization
-- Use struct tags cho serialization
+- Provide constructor functions for complex initialization
+- Use struct tags for serialization
 
 ### 2.5 Testing
 
@@ -214,14 +214,14 @@ func ProcessAsset(store Storage, id string) error {
 
 ---
 
-## 3. CLEAN CODE IN LAYERS
+## 3. CLEAN CODE BY LAYERS
 
 ### Handler Layer
 
 **Focus:** HTTP concerns only
 
 - Parse request → validate input → call service → format response
-- Đừng viết business logic ở đây
+- Do not write business logic here
 - Consistent error response format
 
 ### Service Layer
@@ -242,7 +242,7 @@ func ProcessAsset(store Storage, id string) error {
 - Connection management
 - Transaction handling
 
-**Ví dụ clean separation:**
+**Example of clean separation:**
 
 ```go
 // Handler: HTTP only
@@ -292,7 +292,7 @@ func (s *Storage) Save(asset *Asset) error {
 
 ---
 
-## 4. CODE SMELLS CẦN TRÁNH
+## 4. CODE SMELLS TO AVOID
 
 ### 🚨 Common Bad Practices
 
@@ -344,42 +344,42 @@ func Process(data Data) error {
 
 ---
 
-## 5. CHECKLIST KHI REFACTOR
+## 5. REFACTORING CHECKLIST
 
-Khi refactor code, hỏi những câu hỏi sau:
+When refactoring code, ask yourself the following questions:
 
 ### Naming
 
-- [ ] Variable/function names có clear không?
-- [ ] Có thể hiểu code mà không cần comment không?
+- [ ] Are variable/function names clear?
+- [ ] Can the code be understood without comments?
 
 ### Functions
 
-- [ ] Function chỉ làm 1 việc?
-- [ ] Function length < 20 lines?
-- [ ] Parameters < 4?
+- [ ] Does the function do only one thing?
+- [ ] Is the function length < 20 lines?
+- [ ] Are there < 4 parameters?
 
 ### Complexity
 
-- [ ] Nesting depth < 3 levels?
-- [ ] Có duplicate code không?
-- [ ] Có magic numbers không?
+- [ ] Is the nesting depth < 3 levels?
+- [ ] Is there duplicate code?
+- [ ] Are there magic numbers?
 
 ### Error Handling
 
-- [ ] All errors được handle?
-- [ ] Error messages có helpful không?
-- [ ] Error context được preserve?
+- [ ] Are all errors handled?
+- [ ] Are the error messages helpful?
+- [ ] Is the error context preserved?
 
 ### Testing
 
-- [ ] Code có testable không?
-- [ ] Test coverage đủ?
-- [ ] Tests có clear không?
+- [ ] Is the code testable?
+- [ ] Is the test coverage sufficient?
+- [ ] Are the tests clear?
 
 ---
 
-## 6. VÍ DỤ TRƯỚC & SAU
+## 6. BEFORE & AFTER EXAMPLES
 
 ### ❌ Before: Messy Code
 
@@ -454,43 +454,43 @@ func buildAsset(name, assetType string) *Asset {
 
 ---
 
-## 7. THÓI QUEN HÀNG NGÀY
+## 7. DAILY HABITS
 
-### Khi viết code mới:
+### When writing new code:
 
-1. **Think before you code** - plan structure trước
-2. **Write the simplest thing that works** - đừng over-engineer
-3. **One thing at a time** - complete một feature rồi mới sang feature khác
-4. **Test as you go** - đừng để test đến cuối
+1. **Think before you code** - plan structure beforehand
+2. **Write the simplest thing that works** - do not over-engineer
+3. **One thing at a time** - complete one feature before moving to another
+4. **Test as you go** - do not leave testing until the end
 
-### Khi review code:
+### When reviewing code:
 
-1. **Readability first** - code có dễ đọc không?
-2. **Question complexity** - có cách đơn giản hơn không?
-3. **Check error paths** - errors có được handle đúng không?
-4. **Look for patterns** - có opportunity để refactor không?
+1. **Readability first** - is the code easy to read?
+2. **Question complexity** - is there a simpler way?
+3. **Check error paths** - are errors handled correctly?
+4. **Look for patterns** - is there an opportunity to refactor?
 
-### Khi đọc code của người khác:
+### When reading other people's code:
 
-1. Hiểu high-level structure trước
-2. Đọc tests để hiểu expected behavior
-3. Trace through một happy path
-4. Identify edge cases và error handling
+1. Understand the high-level structure first
+2. Read tests to understand the expected behavior
+3. Trace through a happy path
+4. Identify edge cases and error handling
 
 ---
 
-## 📚 ĐIỂM CHÍNH CẦN NHỚ
+## 8. KEY TAKEAWAYS
 
-1. **Clean code reads like prose** - người khác có thể hiểu nhanh
+1. **Clean code reads like prose** - others can understand it quickly
 2. **Functions do one thing** - small, focused, well-named
 3. **Handle errors explicitly** - never ignore, always add context
-4. **No magic** - constants cho numbers, clear names cho variables
-5. **Test-driven mindset** - nếu khó test, code có vấn đề
+4. **No magic** - constants for numbers, clear names for variables
+5. **Test-driven mindset** - if it is hard to test, the code has issues
 6. **Refactor continuously** - leave code better than you found it
 
 ---
 
-## 📖 TÀI LIỆU THAM KHẢO
+## 9. REFERENCES
 
 - **Clean Code** by Robert C. Martin
 - **Effective Go**: https://go.dev/doc/effective_go

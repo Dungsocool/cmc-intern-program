@@ -1,17 +1,17 @@
-# 🔨 Buổi 2: Basic API Development
+# 🔨 Session 2: Basic API Development
 
-## Mục Tiêu
+## Objectives
 
-- ✅ Implement Clean Architecture với 4 layers
+- ✅ Implement Clean Architecture with 4 layers
 - ✅ CRUD operations: Create, Read (List, Get by ID)
-- ✅ In-memory storage với thread-safe
-- ✅ Hiểu dependency injection và interfaces
+- ✅ In-memory storage with thread-safety
+- ✅ Understand dependency injection and interfaces
 
-## So Sánh với Buổi 1
+## Comparison with Session 1
 
-| Buổi 1          | Buổi 2              |
+| Session 1       | Session 2           |
 | --------------- | ------------------- |
-| 1 file main.go  | 4 layers riêng biệt |
+| Single main.go file | 4 separate layers   |
 | Hello World     | Full CRUD API       |
 | No data storage | In-memory storage   |
 | Monolithic      | Clean Architecture  |
@@ -33,13 +33,13 @@ HTTP Request
 
 **New Files:**
 
-- `asset.go` - Asset struct và constants
+- `asset.go` - Asset struct and constants
 - `errors.go` - Custom error types
 
 **Key Points:**
 
 - Pure domain logic, no dependencies
-- Struct tags cho JSON marshalling
+- Struct tags for JSON marshalling
 - Constants for type safety
 
 ### 2. Storage Layer (`internal/storage/`)
@@ -51,9 +51,9 @@ HTTP Request
 
 **Key Points:**
 
-- Interface cho flexibility (swap implementations)
-- Thread-safety với sync.RWMutex
-- Why interface? → Buổi 3 sẽ swap sang database!
+- Interface for flexibility (swap implementations)
+- Thread-safety with sync.RWMutex
+- Why use interfaces? → Session 3 will swap to a database!
 
 ### 3. Service Layer (`internal/service/`)
 
@@ -62,27 +62,27 @@ HTTP Request
 - `asset_service.go` - Business logic
 - `service.go` - Service interface
 
-**Teaching Points:**
+**Key Points:**
 
 - Validation logic
 - UUID generation
 - Business rules (default status = active)
-- Dependency injection (nhận Storage interface)
+- Dependency injection (injects Storage interface)
 
 ### 4. Handler Layer (`internal/handler/`)
 
 **New Files:**
 
-- `asset_handler.go` - HTTP handlers cho assets
-- `health_handler.go` - Health check (refactored từ main)
+- `asset_handler.go` - HTTP handlers for assets
+- `health_handler.go` - Health check (refactored from main)
 - `handler.go` - Handler registry
 
 **Key Points:**
 
 - HTTP-specific code only
-- JSON parsing và encoding
+- JSON parsing and encoding
 - Status codes (201, 400, 404, 500)
-- Dependency injection (nhận Service)
+- Dependency injection (injects Service)
 
 ### 5. Main (`cmd/server/main.go`)
 

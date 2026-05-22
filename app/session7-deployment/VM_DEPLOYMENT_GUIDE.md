@@ -1,27 +1,27 @@
-# Hướng Dẫn Deployment Lên VM với Nginx và Certbot
+# VM Deployment Guide with Nginx and Certbot
 
-## Tổng Quan
+## Overview
 
-Setup này sử dụng **2 lớp Nginx**:
+This setup utilizes **2 layers of Nginx**:
 
-- **Nginx trong Docker** (port 80 → map ra 3000): Serve frontend static files + proxy API calls đến backend container
-- **Nginx trên VM**: Reverse proxy + SSL termination với Certbot
-- **Docker** để chạy backend (Go API) và database (PostgreSQL)
+- **Nginx in Docker** (port 80 → mapped to 3000): Serves frontend static files + proxies API calls to the backend container
+- **Nginx on VM**: Reverse proxy + SSL termination with Certbot
+- **Docker** to run the backend (Go API) and database (PostgreSQL)
 
-### Tại sao 2 lớp Nginx?
+### Why 2 layers of Nginx?
 
-1. **Nginx trong Docker container**:
-   - Serve React static files (HTML, CSS, JS)
-   - Proxy `/api/*` requests đến backend container
-   - Portable và consistent trong mọi môi trường
+1. **Nginx in Docker container**:
+   - Serves React static files (HTML, CSS, JS)
+   - Proxies `/api/*` requests to the backend container
+   - Portable and consistent across all environments
 
-2. **Nginx trên VM**:
-   - SSL/TLS termination với Let's Encrypt (Certbot)
+2. **Nginx on VM**:
+   - SSL/TLS termination with Let's Encrypt (Certbot)
    - Rate limiting, DDoS protection
-   - Load balancing (nếu scale nhiều containers)
-   - Centralized logging và monitoring
+   - Load balancing (if scaling to multiple containers)
+   - Centralized logging and monitoring
 
-## Kiến Trúc
+## Architecture
 
 ```
 Internet (HTTPS) → Nginx (VM) + Certbot SSL
@@ -36,20 +36,20 @@ Internet (HTTPS) → Nginx (VM) + Certbot SSL
     - Proxy /api/*          PostgreSQL:5432
 ```
 
-**Flow request**:
+**Request Flow**:
 
 1. Browser → `https://domain.com/` → Nginx VM (SSL) → Nginx container (port 3000) → Serve index.html
 2. Browser → `https://domain.com/api/health` → Nginx VM → Nginx container `/api/*` → Backend:8080
 
-## Bước 1: Chuẩn Bị VM
+## Step 1: Preparing the VM
 
-### Yêu Cầu
+### Requirements
 
-- Ubuntu 20.04+ hoặc Debian 11+
-- Docker và Docker Compose đã cài đặt
-- Domain name đã trỏ về VM (cho SSL)
+- Ubuntu 20.04+ or Debian 11+
+- Docker and Docker Compose installed
+- Domain name pointed to the VM IP (for SSL)
 
-### Cài Đặt Docker
+### Installing Docker
 
 ```bash
 # Update system
@@ -72,7 +72,7 @@ docker --version
 docker-compose --version
 ```
 
-### Cài Đặt Nginx
+### Installing Nginx
 
 ```bash
 sudo apt install nginx -y
@@ -80,15 +80,15 @@ sudo systemctl enable nginx
 sudo systemctl start nginx
 ```
 
-### Cài Đặt Certbot
+### Installing Certbot
 
 ```bash
 sudo apt install certbot python3-certbot-nginx -y
 ```
 
-## Bước 2: Deploy Ứng Dụng
+## Step 2: Deploying the Application
 
-### Clone Repository
+### Clone the Repository
 
 ```bash
 cd /opt
@@ -97,10 +97,10 @@ sudo chown -R $USER:$USER cmc-intern-program
 cd cmc-intern-program/app/session7-deployment
 ```
 
-### Cấu Hình Environment Variables
+### Configuring Environment Variables
 
 ```bash
-# Tạo .env cho backend (tùy chọn, có thể dùng docker-compose.yml)
+# Create .env for backend (optional, can also use docker-compose.yml directly)
 cat > backend/.env << EOF
 DB_HOST=db
 DB_PORT=5432
@@ -110,41 +110,41 @@ DB_NAME=mini_asm
 EOF
 ```
 
-### Cập Nhật docker-compose.yml
+### Updating docker-compose.yml
 
 ```bash
-# Sửa password trong docker-compose.yml
+# Modify passwords in docker-compose.yml
 nano docker-compose.yml
 
-# Đổi:
+# Change:
 # POSTGRES_PASSWORD: postgres@123
 # DB_PASSWORD: postgres@123
 #
-# Thành password mạnh hơn
+# To a stronger password
 ```
 
-### Start Services
+### Starting Services
 
 ```bash
-# Build và start containers
+# Build and start containers
 docker-compose up -d
 
-# Kiểm tra status
+# Check status
 docker-compose ps
 
-# Xem logs
+# View logs
 docker-compose logs -f
 ```
 
-## Bước 3: Cấu Hình Nginx
+## Step 3: Configuring Nginx
 
-### Tạo Nginx Config
+### Creating Nginx Configuration
 
 ```bash
 sudo nano /etc/nginx/sites-available/mini-asm
 ```
 
-Nội dung file (thay `your-domain.com` bằng domain của bạn):
+File content (replace `your-domain.com` with your actual domain):
 
 ```nginx
 # Mini ASM - Nginx Configuration
@@ -161,7 +161,7 @@ server {
     listen [::]:80;
     server_name your-domain.com www.your-domain.com;
 
-    # Redirect HTTP to HTTPS (sẽ kích hoạt sau khi có SSL)
+    # Redirect HTTP to HTTPS (will be enabled after obtaining SSL)
     # return 301 https://$server_name$request_uri;
 
     # Client max body size
@@ -169,8 +169,8 @@ server {
 
     # Frontend
     location / {
-        # Proxy tất cả requests đến Nginx container
-        # Nginx container sẽ serve static files HOẶC proxy /api/* đến backend
+        # Proxy all requests to the Nginx container
+        # The Nginx container will serve static files OR proxy /api/* to the backend
         proxy_pass http://frontend;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
@@ -182,9 +182,9 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    # KHÔNG CẦN proxy /api/ riêng ở đây
-    # Vì Nginx container (frontend:3000) đã handle /api/* và proxy đến backend
-    # Nginx VM chỉ cần forward TẤT CẢ requests đến frontend container
+    # NO NEED for a separate /api/ proxy here
+    # Because Nginx container (frontend:3000) already handles /api/* and proxies to the backend
+    # Nginx VM only needs to forward ALL requests to the frontend container
 
     # Security headers
     add_header X-Frame-Options "SAMEORIGIN" always;
@@ -204,13 +204,13 @@ server {
 }
 ```
 
-### Kích Hoạt Site
+### Activating the Site
 
 ```bash
-# Tạo symbolic link
+# Create symbolic link
 sudo ln -s /etc/nginx/sites-available/mini-asm /etc/nginx/sites-enabled/
 
-# Xóa default site (tùy chọn)
+# Remove default site (optional)
 sudo rm /etc/nginx/sites-enabled/default
 
 # Test config
@@ -220,30 +220,30 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-## Bước 4: Cấu Hình SSL với Certbot
+## Step 4: Configuring SSL with Certbot
 
-### Lấy SSL Certificate
+### Obtaining the SSL Certificate
 
 ```bash
-# Chạy Certbot
+# Run Certbot
 sudo certbot --nginx -d your-domain.com -d www.your-domain.com
 
-# Làm theo hướng dẫn:
-# 1. Nhập email
-# 2. Đồng ý terms of service
-# 3. Chọn redirect HTTP to HTTPS (option 2)
+# Follow the instructions:
+# 1. Enter email
+# 2. Agree to terms of service
+# 3. Choose redirect HTTP to HTTPS (option 2)
 ```
 
-Certbot sẽ tự động:
+Certbot will automatically:
 
-- Lấy SSL certificate từ Let's Encrypt
-- Cập nhật Nginx config
-- Setup auto-renewal
+- Fetch the SSL certificate from Let's Encrypt
+- Update Nginx config
+- Set up auto-renewal
 
-### Verify SSL
+### Verifying SSL
 
 ```bash
-# Kiểm tra certificate
+# Check certificates
 sudo certbot certificates
 
 # Test renewal
@@ -252,27 +252,27 @@ sudo certbot renew --dry-run
 
 ### Auto-renewal
 
-Certbot tự động tạo cron job hoặc systemd timer. Kiểm tra:
+Certbot automatically creates a cron job or systemd timer. Verify:
 
 ```bash
 # Systemd timer
 sudo systemctl status certbot.timer
 
-# Hoặc cron
+# Or cron
 sudo crontab -l
 ```
 
-## Bước 5: Cập Nhật Frontend Config
+## Step 5: Updating Frontend Configuration
 
-Cập nhật frontend để sử dụng `/api` thay vì direct URL:
+Update the frontend to use `/api` instead of the direct URL:
 
 ```bash
 # File: frontend/src/services/api.js
-# Đảm bảo API calls sử dụng /api prefix:
+# Ensure API calls use the /api prefix:
 # const API_BASE = '/api'
 ```
 
-Rebuild frontend nếu cần:
+Rebuild frontend if necessary:
 
 ```bash
 cd /opt/cmc-intern-program/app/session7-deployment
@@ -280,9 +280,9 @@ docker-compose build frontend
 docker-compose up -d frontend
 ```
 
-## Bước 6: Testing
+## Step 6: Testing
 
-### Test Local
+### Test Locally
 
 ```bash
 # Health check
@@ -292,30 +292,30 @@ curl http://localhost:8080/health
 curl http://localhost:3000
 ```
 
-### Test qua Nginx
+### Test via Nginx
 
 ```bash
-# HTTP (trước khi có SSL)
+# HTTP (before SSL)
 curl http://your-domain.com
 curl http://your-domain.com/api/health
 
-# HTTPS (sau khi có SSL)
+# HTTPS (after SSL)
 curl https://your-domain.com
 curl https://your-domain.com/api/health
 ```
 
-### Test trên Browser
+### Test on Browser
 
-1. Mở `https://your-domain.com`
-2. Kiểm tra SSL certificate (icon khóa trên address bar)
-3. Test các chức năng của ứng dụng
+1. Open `https://your-domain.com`
+2. Check the SSL certificate (padlock icon in the address bar)
+3. Test application functionalities
 
-## Bước 7: Monitoring & Logs
+## Step 7: Monitoring & Logs
 
 ### Docker Logs
 
 ```bash
-# Xem tất cả logs
+# View all logs
 cd /opt/cmc-intern-program/app/session7-deployment
 docker-compose logs -f
 
@@ -346,25 +346,25 @@ docker system df
 df -h
 ```
 
-## Bước 8: Backup & Maintenance
+## Step 8: Backup & Maintenance
 
 ### Database Backup
 
 ```bash
-# Tạo backup directory
+# Create backup directory
 mkdir -p /opt/backups/mini-asm
 
 # Backup database
 docker-compose exec -T db pg_dump -U postgres mini_asm > /opt/backups/mini-asm/backup_$(date +%Y%m%d_%H%M%S).sql
 
-# Hoặc dùng script tự động
+# Or use an automated script
 cat > /opt/backup-db.sh << 'EOF'
 #!/bin/bash
 BACKUP_DIR="/opt/backups/mini-asm"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 cd /opt/cmc-intern-program/app/session7-deployment
 docker-compose exec -T db pg_dump -U postgres mini_asm > "$BACKUP_DIR/backup_$TIMESTAMP.sql"
-# Keep only last 7 days
+# Keep only the last 7 days
 find "$BACKUP_DIR" -name "backup_*.sql" -mtime +7 -delete
 EOF
 
@@ -382,7 +382,7 @@ cd /opt/cmc-intern-program/app/session7-deployment
 # Pull latest code
 git pull origin main
 
-# Rebuild và restart
+# Rebuild and restart
 docker-compose build
 docker-compose up -d
 
@@ -392,7 +392,7 @@ docker-compose ps
 
 ### SSL Certificate Renewal
 
-Certbot tự động renew, nhưng có thể manual:
+Certbot automatically renews certificates, but you can trigger it manually:
 
 ```bash
 sudo certbot renew
@@ -401,13 +401,13 @@ sudo systemctl reload nginx
 
 ## Troubleshooting
 
-### Lỗi: "502 Bad Gateway"
+### Error: "502 Bad Gateway"
 
 ```bash
-# Kiểm tra containers có chạy không
+# Check if containers are running
 docker-compose ps
 
-# Kiểm tra logs
+# Check logs
 docker-compose logs backend
 docker-compose logs frontend
 
@@ -415,62 +415,62 @@ docker-compose logs frontend
 docker-compose restart
 ```
 
-### Lỗi: "Connection Refused"
+### Error: "Connection Refused"
 
 ```bash
-# Kiểm tra port đang lắng nghe
+# Check listening ports
 sudo netstat -tulpn | grep -E ':3000|:8080'
 
-# Kiểm tra firewall
+# Check firewall
 sudo ufw status
 sudo ufw allow 80/tcp
 sudo ufw allow 443/tcp
 ```
 
-### Lỗi SSL Certificate
+### SSL Certificate Errors
 
 ```bash
-# Kiểm tra certificate
+# Check certificate status
 sudo certbot certificates
 
-# Renew manually
+# Force manual renewal
 sudo certbot renew --force-renewal
 
-# Restart nginx
+# Restart Nginx
 sudo systemctl restart nginx
 ```
 
 ### Database Connection Issues
 
 ```bash
-# Kiểm tra database
+# Verify database responsiveness
 docker-compose exec db psql -U postgres -d mini_asm -c "SELECT 1;"
 
-# Restart database
+# Restart database container
 docker-compose restart db
 
-# Check logs
+# Check database logs
 docker-compose logs db
 ```
 
 ## Security Checklist
 
-- [ ] Đổi default passwords
-- [ ] Setup firewall (ufw)
-- [ ] Enable fail2ban
+- [ ] Change default passwords
+- [ ] Set up firewall (UFW)
+- [ ] Enable Fail2ban
 - [ ] Regular security updates
-- [ ] Backup database định kỳ
+- [ ] Regular database backups
 - [ ] Monitor logs
 - [ ] Limit SSH access
-- [ ] Use strong SSL settings
+- [ ] Use secure SSL settings
 
 ## Firewall Setup
 
 ```bash
-# Install ufw
+# Install UFW
 sudo apt install ufw -y
 
-# Allow SSH (QUAN TRỌNG!)
+# Allow SSH (IMPORTANT!)
 sudo ufw allow ssh
 
 # Allow HTTP & HTTPS
@@ -492,7 +492,7 @@ sudo ufw status
 # Edit nginx.conf
 sudo nano /etc/nginx/nginx.conf
 
-# Tăng worker_connections
+# Increase worker_connections
 events {
     worker_connections 2048;
 }
@@ -506,7 +506,7 @@ http {
 ### Docker Resources
 
 ```bash
-# Giới hạn resources trong docker-compose.yml
+# Limit resources in docker-compose.yml
 services:
   backend:
     deploy:
@@ -525,7 +525,7 @@ docker-compose restart
 # Stop all services
 docker-compose down
 
-# Start with rebuild
+# Start with build
 docker-compose up -d --build
 
 # View container IPs
@@ -543,13 +543,13 @@ sudo systemctl restart nginx
 
 ## Support
 
-Nếu gặp vấn đề:
+If you encounter issues:
 
-1. Kiểm tra logs: `docker-compose logs` và `/var/log/nginx/`
+1. Check logs: `docker-compose logs` and `/var/log/nginx/`
 2. Verify config: `sudo nginx -t`
 3. Check ports: `sudo netstat -tulpn`
 4. Review firewall: `sudo ufw status`
 
 ---
 
-**Lưu ý**: Thay thế `your-domain.com` bằng domain thật của bạn trong tất cả các config!
+**Note**: Replace `your-domain.com` with your actual domain in all configurations!

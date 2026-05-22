@@ -1,8 +1,8 @@
 # 🏗️ PROJECT STRUCTURE & CLEAN ARCHITECTURE
 
-## Mục đích
+## Purpose
 
-Tài liệu này giải thích cấu trúc project Mini ASM và nguyên tắc Clean Architecture được áp dụng.
+This document explains the Mini ASM project structure and the applied Clean Architecture principles.
 
 ---
 
@@ -12,7 +12,7 @@ Tài liệu này giải thích cấu trúc project Mini ASM và nguyên tắc Cl
 mini-asm/
 ├── cmd/                     # Application entry points
 │   └── server/
-│       └── main.go          # Main entry point - khởi tạo và chạy server
+│       └── main.go          # Main entry point - initialize and run the server
 │
 ├── internal/                # Private application code
 │   ├── handler/             # HTTP handlers (Presentation Layer)
@@ -60,13 +60,13 @@ mini-asm/
 
 ## 2. CLEAN ARCHITECTURE LAYERS
 
-Clean Architecture chia hệ thống thành các layer độc lập, với dependency flow từ ngoài vào trong.
+Clean Architecture divides the system into independent layers, with the dependency flow from the outside in.
 
 ### 2.1 Dependency Rule
 
-**Nguyên tắc quan trọng nhất:**
+**The most important principle:**
 
-> Code ở layer bên trong KHÔNG được biết gì về layer bên ngoài.
+> Code in the inner layers MUST NOT know anything about the outer layers.
 
 ```
 ┌─────────────────────────────────────┐
@@ -82,11 +82,11 @@ Clean Architecture chia hệ thống thành các layer độc lập, với depen
 └─────────────────────────────────────┘
 ```
 
-### 2.2 Layer Chi Tiết
+### 2.2 Layer Details
 
 #### **Entity Layer (model/)**
 
-Core domain models - không phụ thuộc vào bất kỳ layer nào khác.
+Core domain models - do not depend on any other layers.
 
 ```go
 // model/asset.go
@@ -119,7 +119,7 @@ const (
 
 #### **Infrastructure Layer (storage/)**
 
-Xử lý data persistence - implements storage interface.
+Handles data persistence - implements storage interface.
 
 ```go
 // storage/storage.go
@@ -139,15 +139,15 @@ type Storage interface {
 }
 ```
 
-**Ưu điểm:**
+**Advantages:**
 
-- Dễ dàng swap giữa in-memory và database
-- Test được mà không cần database thật
-- Cách ly business logic khỏi implementation details
+- Easily swap between in-memory and database
+- Testable without a real database
+- Isolate business logic from implementation details
 
 #### **Use Case Layer (service/)**
 
-Business logic - orchestrate operations, validation, business rules.
+Business logic - orchestrate operations, validations, and business rules.
 
 ```go
 // service/asset_service.go
@@ -203,16 +203,16 @@ func isValidType(t string) bool {
 }
 ```
 
-**Trách nhiệm:**
+**Responsibilities:**
 
-- Validation input
+- Input validation
 - Business rules enforcement
 - Orchestrate operations
 - Error handling
 
 #### **Presentation Layer (handler/)**
 
-HTTP handlers - xử lý HTTP request/response, JSON marshalling.
+HTTP handlers - handle HTTP requests/responses and JSON marshalling.
 
 ```go
 // handler/asset_handler.go
@@ -268,19 +268,19 @@ func RespondError(w http.ResponseWriter, status int, message string) {
 }
 ```
 
-**Trách nhiệm:**
+**Responsibilities:**
 
-- Parse HTTP request
+- Parse HTTP requests
 - Validate HTTP-specific concerns
-- Call appropriate service method
-- Format HTTP response
+- Call the appropriate service method
+- Format the HTTP response
 - Set appropriate status codes
 
 ---
 
 ## 3. WIRE UP - Main Entry Point
 
-File `cmd/server/main.go` là nơi wire up tất cả dependencies.
+The `cmd/server/main.go` file is where all dependencies are wired up.
 
 ```go
 // cmd/server/main.go
@@ -296,7 +296,7 @@ import (
 )
 
 func main() {
-    // Initialize storage (Buổi 2: memory, Buổi 3: postgres)
+    // Initialize storage (Session 2: memory, Session 3: postgres)
     store := memory.NewMemoryStorage()
 
     // Initialize service
@@ -326,11 +326,11 @@ func main() {
 
 ---
 
-## 4. LỢI ÍCH CỦA CLEAN ARCHITECTURE
+## 4. BENEFITS OF CLEAN ARCHITECTURE
 
 ### 4.1 Testability
 
-Mỗi layer có thể test độc lập:
+Each layer can be tested independently:
 
 ```go
 // Test service without real storage
@@ -347,25 +347,25 @@ func TestAssetService_CreateAsset(t *testing.T) {
 
 ### 4.2 Flexibility
 
-Dễ dàng thay đổi implementation:
+Easily change the implementation:
 
 ```go
-// Buổi 2: In-memory
+// Session 2: In-memory
 store := memory.NewMemoryStorage()
 
-// Buổi 3: Switch to database - code khác không thay đổi
+// Session 3: Switch to database - other code remains unchanged
 store := postgres.NewPostgresStorage(db)
 ```
 
 ### 4.3 Maintainability
 
-- Code có cấu trúc rõ ràng
-- Dễ tìm bug (biết chính xác layer nào có vấn đề)
-- Dễ onboard developer mới
+- Clearly structured code
+- Easy to debug (know exactly which layer has the issue)
+- Easy to onboard new developers
 
 ### 4.4 Separation of Concerns
 
-Mỗi layer có trách nhiệm riêng:
+Each layer has its own responsibility:
 
 - Handler: HTTP concerns
 - Service: Business logic
@@ -374,11 +374,11 @@ Mỗi layer có trách nhiệm riêng:
 
 ---
 
-## 5. SO SÁNH CLEAN ARCHITECTURE VỚI MVC
+## 5. COMPARING CLEAN ARCHITECTURE WITH MVC
 
-### 5.1 Tổng Quan MVC Architecture
+### 5.1 MVC Architecture Overview
 
-MVC (Model-View-Controller) là pattern phổ biến cho web applications:
+MVC (Model-View-Controller) is a popular pattern for web applications:
 
 ```
 ┌──────────┐      ┌────────────┐      ┌───────┐
@@ -386,7 +386,7 @@ MVC (Model-View-Controller) là pattern phổ biến cho web applications:
 └──────────┘      └────────────┘      └───────┘
 ```
 
-**MVC trong Go có thể trông như thế này:**
+**MVC in Go can look like this:**
 
 ```
 project/
@@ -399,18 +399,18 @@ project/
     └── templates/
 ```
 
-### 5.2 So Sánh Chi Tiết
+### 5.2 Detailed Comparison
 
-| Khía Cạnh                | MVC                                       | Clean Architecture                                         |
+| Aspect | MVC | Clean Architecture |
 | ------------------------ | ----------------------------------------- | ---------------------------------------------------------- |
-| **Số lượng layers**      | 3 layers (Model, View, Controller)        | 4+ layers (Entity, Use Case, Interface Adapter, Framework) |
-| **Business Logic**       | Thường nằm trong Model hoặc Controller    | Tách riêng trong Use Case/Service layer                    |
-| **Dependency Direction** | Controller → Model, View → Model          | Luôn hướng vào trong (Dependency Rule)                     |
-| **Testability**          | Khó test Controller (phụ thuộc framework) | Dễ test (mỗi layer độc lập)                                |
-| **Database Coupling**    | Model thường coupled với ORM/DB           | Storage layer cách ly, dễ swap implementation              |
-| **Flexibility**          | Khó thay đổi framework/database           | Dễ dàng thay đổi external dependencies                     |
-| **Complexity**           | Đơn giản, dễ học                          | Phức tạp hơn, nhiều abstraction                            |
-| **Best For**             | Small to medium projects, CRUD apps       | Large projects, complex business logic                     |
+| **Number of layers** | 3 layers (Model, View, Controller) | 4+ layers (Entity, Use Case, Interface Adapter, Framework) |
+| **Business Logic** | Usually in Model or Controller | Isolated in Use Case/Service layer |
+| **Dependency Direction** | Controller → Model, View → Model | Always directed inward (Dependency Rule) |
+| **Testability** | Hard to test Controller (framework-dependent) | Easy to test (each layer is independent) |
+| **Database Coupling** | Model is usually coupled with ORM/DB | Storage layer isolated, easy to swap implementation |
+| **Flexibility** | Hard to change framework/database | Easily change external dependencies |
+| **Complexity** | Simple, easy to learn | More complex, more abstraction |
+| **Best For** | Small to medium projects, CRUD apps | Large projects, complex business logic |
 
 ### 5.3 Code Comparison
 
@@ -426,7 +426,7 @@ func (c *AssetController) CreateAsset(w http.ResponseWriter, r *http.Request) {
     var req Request
     json.NewDecoder(r.Body).Decode(&req)
 
-    // Validation + Business logic + SQL - tất cả trong controller
+    // Validation + Business logic + SQL - all in controller
     if req.Name == "" {
         http.Error(w, "name required", 400)
         return
@@ -447,12 +447,12 @@ func (c *AssetController) CreateAsset(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-**Vấn đề:**
+**Issues:**
 
-- ❌ Controller biết về database implementation
-- ❌ Business logic lẫn với HTTP handling
-- ❌ Khó test (cần database thật)
-- ❌ Khó scale khi logic phức tạp
+- ❌ Controller knows about database implementation
+- ❌ Business logic mixed with HTTP handling
+- ❌ Hard to test (requires a real database)
+- ❌ Hard to scale when logic gets complex
 
 #### Clean Architecture Style (More Layers, More Flexible)
 
@@ -462,7 +462,7 @@ func (h *AssetHandler) CreateAsset(w http.ResponseWriter, r *http.Request) {
     var req Request
     json.NewDecoder(r.Body).Decode(&req)
 
-    // Chỉ handle HTTP concerns
+    // Only handle HTTP concerns
     asset, err := h.service.CreateAsset(req.Name, req.Type)
     if err != nil {
         RespondError(w, http.StatusBadRequest, err.Error())
@@ -474,7 +474,7 @@ func (h *AssetHandler) CreateAsset(w http.ResponseWriter, r *http.Request) {
 
 // service/asset_service.go (Use Case Layer)
 func (s *AssetService) CreateAsset(name, assetType string) (*model.Asset, error) {
-    // Business logic và validation
+    // Business logic and validation
     if name == "" {
         return nil, errors.New("name is required")
     }
@@ -501,39 +501,39 @@ func (s *PostgresStorage) Create(asset *model.Asset) error {
 }
 ```
 
-**Ưu điểm:**
+**Advantages:**
 
-- ✅ Mỗi layer có responsibility rõ ràng
-- ✅ Service layer test được mà không cần HTTP hay DB
-- ✅ Dễ swap storage (memory → postgres → mongodb)
-- ✅ Business logic tách biệt và reusable
+- ✅ Each layer has clear responsibility
+- ✅ Service layer is testable without HTTP or DB
+- ✅ Easy to swap storage (memory → postgres → mongodb)
+- ✅ Business logic is separated and reusable
 
-### 5.4 Khi Nào Dùng MVC vs Clean Architecture?
+### 5.4 When to Use MVC vs Clean Architecture?
 
-#### Dùng MVC khi:
+#### Use MVC when:
 
-✅ Project nhỏ, CRUD đơn giản
-✅ Team nhỏ, cần ship nhanh
-✅ Business logic không phức tạp
-✅ Ít khi thay đổi database/framework
+✅ Small projects, simple CRUD
+✅ Small team, need to ship fast
+✅ Uncomplicated business logic
+✅ Rarely change database/framework
 ✅ Prototype, MVP
 
-**Ví dụ:** Blog cá nhân, admin dashboard đơn giản, internal tools
+**Example:** Personal blog, simple admin dashboard, internal tools
 
-#### Dùng Clean Architecture khi:
+#### Use Clean Architecture when:
 
-✅ Project lớn, phức tạp
-✅ Business logic phong phú
-✅ Cần testability cao
-✅ Nhiều developers cùng làm việc
-✅ Dự kiến thay đổi database/framework
+✅ Large, complex projects
+✅ Rich business logic
+✅ High testability needed
+✅ Multiple developers working together
+✅ Expected changes in database/framework
 ✅ Long-term maintenance
 
-**Ví dụ:** E-commerce platform, banking system, enterprise applications
+**Example:** E-commerce platform, banking system, enterprise applications
 
 ### 5.5 Evolution Path
 
-Nhiều projects bắt đầu với MVC và evolve sang Clean Architecture:
+Many projects start with MVC and evolve into Clean Architecture:
 
 ```
 Stage 1: Simple MVC
@@ -541,7 +541,7 @@ Stage 1: Simple MVC
   → Good for MVP
 
 Stage 2: Growing Complexity
-  → Business logic phức tạp
+  → Complex business logic
   → Hard to test
   → Controllers become bloated
 
@@ -553,10 +553,10 @@ Stage 3: Refactor to Clean Architecture
 
 ### 5.6 Hybrid Approach
 
-Trong thực tế, bạn có thể mix:
+In practice, you can mix:
 
 ```go
-// Giữ MVC structure nhưng thêm service layer
+// Keep MVC structure but add a service layer
 controllers/
   └── asset_controller.go    // Thin controller
 services/                     // Business logic
@@ -567,27 +567,27 @@ repositories/                 // Data access
   └── asset_repository.go
 ```
 
-Đây là **good middle ground** cho nhiều projects!
+This is a **good middle ground** for many projects!
 
 ---
 
-## 6. ANTI-PATTERNS CẦN TRÁNH
+## 6. ANTI-PATTERNS TO AVOID
 
 ### ❌ Mixing Layers
 
 ```go
-// BAD: Handler chứa business logic và SQL
+// BAD: Handler contains business logic and SQL
 func (h *Handler) CreateAsset(w http.ResponseWriter, r *http.Request) {
     var req Request
     json.NewDecoder(r.Body).Decode(&req)
 
-    // Business logic trong handler - WRONG!
+    // Business logic in handler - WRONG!
     if req.Name == "" {
         http.Error(w, "name required", 400)
         return
     }
 
-    // SQL trong handler - WRONG!
+    // SQL in handler - WRONG!
     db.Exec("INSERT INTO assets VALUES (?, ?)", req.Name, req.Type)
 }
 ```
@@ -595,20 +595,20 @@ func (h *Handler) CreateAsset(w http.ResponseWriter, r *http.Request) {
 ### ❌ Wrong Dependency Direction
 
 ```go
-// BAD: Model phụ thuộc vào storage
+// BAD: Model depends on storage
 type Asset struct {
     ID   string
-    DB   *sql.DB  // WRONG! Entity không nên biết về database
+    DB   *sql.DB  // WRONG! Entity should not know about the database
 }
 ```
 
 ### ❌ Skipping Layers
 
 ```go
-// BAD: Handler gọi trực tiếp storage
+// BAD: Handler calls storage directly
 func (h *Handler) CreateAsset(w http.ResponseWriter, r *http.Request) {
     asset := parseRequest(r)
-    h.storage.Create(asset)  // WRONG! Bỏ qua service layer
+    h.storage.Create(asset)  // WRONG! Skipping the service layer
 }
 ```
 
@@ -616,21 +616,21 @@ func (h *Handler) CreateAsset(w http.ResponseWriter, r *http.Request) {
 
 ## 7. CHECKLIST
 
-Khi implement feature mới, follow checklist này:
+When implementing a new feature, follow this checklist:
 
-- [ ] **Model**: Define domain entity trong `model/`
+- [ ] **Model**: Define the domain entity in `model/`
 - [ ] **Storage Interface**: Add method to storage interface
-- [ ] **Storage Implementation**: Implement trong `memory/` hoặc `postgres/`
-- [ ] **Service**: Add business logic method trong `service/`
-- [ ] **Handler**: Add HTTP handler trong `handler/`
-- [ ] **Main**: Wire up trong `main.go`
-- [ ] **Test**: Viết test cho từng layer
+- [ ] **Storage Implementation**: Implement in `memory/` or `postgres/`
+- [ ] **Service**: Add the business logic method in `service/`
+- [ ] **Handler**: Add the HTTP handler in `handler/`
+- [ ] **Main**: Wire up in `main.go`
+- [ ] **Test**: Write tests for each layer
 
 ---
 
 ## 8. EVOLVING THE ARCHITECTURE
 
-### Buổi 2: Basic Structure
+### Session 2: Basic Structure
 
 ```
 cmd/server/main.go
@@ -641,21 +641,21 @@ internal/
   └── model/
 ```
 
-### Buổi 3: Add Database
+### Session 3: Add Database
 
 ```
 + internal/storage/postgres/
 + migrations/
 ```
 
-### Buổi 5: Add Tests
+### Session 5: Add Tests
 
 ```
 + test/
 + *_test.go files
 ```
 
-### Buổi 6: Add Frontend
+### Session 6: Add Frontend
 
 ```
 + web/
@@ -665,7 +665,7 @@ internal/
 
 ---
 
-## 📚 TÀI LIỆU THAM KHẢO
+## 📚 REFERENCES
 
 - [The Clean Architecture - Robert C. Martin](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 - [Go Project Layout](https://github.com/golang-standards/project-layout)

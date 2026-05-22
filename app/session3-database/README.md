@@ -1,4 +1,4 @@
-# 🗄️ Buổi 3: Database Integration
+# 🗄️ Session 3: Database Integration
 
 ## ⚡ Quick Start
 
@@ -27,17 +27,17 @@ curl http://localhost:8080/assets
 
 ---
 
-## Mục Tiêu
+## Objectives
 
-- ✅ Thiết kế database schema
-- ✅ Integration với PostgreSQL
-- ✅ Database migration
-- ✅ So sánh in-memory vs database persistence
+- ✅ Design database schema
+- ✅ Integrate with PostgreSQL
+- ✅ Database migrations
+- ✅ Compare in-memory vs database persistence
 - ✅ Configuration management
 
-## So Sánh với Buổi 2
+## Comparison with Session 2
 
-| Aspect           | Buổi 2 (Memory) | Buổi 3 (Database)              |
+| Aspect           | Session 2 (Memory) | Session 3 (Database)           |
 | ---------------- | --------------- | ------------------------------ |
 | **Storage**      | In-memory map   | PostgreSQL table               |
 | **Persistence**  | Lost on restart | Permanent                      |
@@ -48,13 +48,13 @@ curl http://localhost:8080/assets
 ## Key Point: Clean Architecture Benefits
 
 ```go
-// Buổi 2
+// Session 2
 store := memory.NewMemoryStorage()
 
-// Buổi 3 - CHỈ THAY 1 DÒNG!
+// Session 3 - ONLY CHANGE 1 LINE!
 store := postgres.NewPostgresStorage(db)
 
-// Handler, Service, Model: KHÔNG THAY ĐỔI!
+// Handler, Service, Model: NO CHANGES!
 ```
 
 ## New Files
@@ -161,47 +161,47 @@ DB_SSLMODE=disable
 
 ## Flow
 
-### Step 1: Review Buổi 2 (10 phút)
+### Step 1: Review Session 2 (10 minutes)
 
 - Show memory storage working
 - Restart server → data lost!
 - "We need persistence!"
 
-### Step 2: Database Design (20 phút)
+### Step 2: Database Design (20 minutes)
 
 - Draw ER diagram
 - Explain schema design
 - Column types and constraints
 - Indexes for performance
 
-### Step 3: Setup PostgreSQL (15 phút)
+### Step 3: Setup PostgreSQL (15 minutes)
 
 - Docker Compose walkthrough
 - Start database: `docker-compose up -d`
 - Connect with client: `psql -h localhost -U postgres mini_asm`
 - Run migration
 
-### Step 4: PostgresStorage Implementation (45 phút)
+### Step 4: PostgresStorage Implementation (45 minutes)
 
 - Compare with MemoryStorage interface
 - SQL queries walkthrough
 - Prepared statements (security)
 - Error handling (SQL errors → domain errors)
 
-### Step 5: Configuration (15 phút)
+### Step 5: Configuration (15 minutes)
 
 - Environment variables
 - Config loading
 - Connection string building
 - Connection pooling settings
 
-### Step 6: Update Main (10 phút)
+### Step 6: Update Main (10 minutes)
 
 - Add database connection
 - Swap storage implementation
 - Test endpoints
 
-### Step 7: Demo (15 phút)
+### Step 7: Demo (15 minutes)
 
 1. Create assets via API
 2. Stop server
@@ -209,7 +209,7 @@ DB_SSLMODE=disable
 4. List assets → still there!
 5. Show in database: `SELECT * FROM assets;`
 
-### Step 8: Performance Comparison (10 phút)
+### Step 8: Performance Comparison (10 minutes)
 
 - Benchmark memory vs database
 - Explain trade-offs

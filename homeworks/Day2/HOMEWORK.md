@@ -1,82 +1,61 @@
-# 📝 Bài Tập Về Nhà - Sessions 1-3
+# 📝 Homework Assignment - Sessions 1-3
 
-**Deadline:** Trước ngày thứ 3  
-**Cách nộp:** Push lên Git repository cá nhân tại branch homework. Mời dinhmanhtan (dmtangtnd@gmail.com) vào project. Tạo pull request từ branch homework vào main. Set reviewer là dinhmanhtan  
-**Note**: Project có thể viết bằng ngôn ngữ khác không bắt buộc phải dùng Go. Nếu sử dụng ngôn ngữ khác cần mô tả cách cài đặt và chạy project
+**Deadline:** Before Day 3  
+**Submission Method:** Push to your personal Git repository on the `homework` branch. Invite dinhmanhtan (dmtangtnd@gmail.com) to the project. Create a pull request from the `homework` branch to `main`. Set reviewer to `dinhmanhtan`.  
+**Note**: The project can be written in other languages; Go is not strictly mandatory. If you use a different language, please describe how to install and run the project.
 
 ---
 
-## 📑 Mục Lục
+## 📝 Table of Contents
 
-- [Yêu Cầu Chung](#yêu-cầu-chung)
-- [📤 Nộp Bài](#-nộp-bài)
-- [Bài 1: Statistics APIs (20 điểm)](#bài-1-statistics-apis-20-điểm)
+- [General Requirements](#general-requirements)
+- [How to Submit](#how-to-submit)
+- [Exercise 1: Statistics APIs (20 pts)](#exercise-1-statistics-apis-20-pts)
   - [1.1 Get Assets Statistics](#11-get-assets-statistics)
   - [1.2 Count Assets by Filter](#12-count-assets-by-filter)
-- [Bài 2: Batch Create Assets (25 điểm)](#bài-2-batch-create-assets-25-điểm)
-- [Bài 3: Batch Delete Assets (20 điểm)](#bài-3-batch-delete-assets-20-điểm)
-- [Bài 4: Database Connection Retry (25 điểm) ⭐](#bài-4-database-connection-retry-25-điểm-)
-- [Bài 5: Database Health Check (15 điểm)](#bài-5-database-health-check-15-điểm)
-- [Bài 6: Pagination & Filtering (15 điểm) - BONUS 🌟](#bài-6-pagination--filtering-15-điểm---bonus-)
-- [Bài 7: Search by Name (10 điểm) - BONUS 🌟](#bài-7-search-by-name-10-điểm---bonus-)
-- [📊 Chấm Điểm](#-chấm-điểm)
-- [💡 Gợi Ý & Tips](#-gợi-ý--tips)
-- [📚 Tài Liệu Tham Khảo](#-tài-liệu-tham-khảo)
-- [🚀 Bonus Challenges](#-bonus-challenges)
+- [Exercise 2: Batch Create Assets (25 pts)](#exercise-2-batch-create-assets-25-pts)
+- [Exercise 3: Batch Delete Assets (20 pts)](#exercise-3-batch-delete-assets-20-pts)
+- [Exercise 4: Database Connection Retry (25 pts)](#exercise-4-database-connection-retry-25-pts)
+- [Exercise 5: Database Health Check (15 pts)](#exercise-5-database-health-check-15-pts)
+- [Exercise 6: Pagination & Filtering (15 pts) - BONUS](#exercise-6-pagination--filtering-15-pts---bonus)
+- [Exercise 7: Search by Name (10 pts) - BONUS](#exercise-7-search-by-name-10-pts---bonus)
+- [Grading Rubric](#grading-rubric)
+- [Hints & Tips](#hints--tips)
+- [Reference Materials](#reference-materials)
+- [Bonus Challenges](#bonus-challenges)
 
 ---
 
-## Yêu Cầu Chung
+## General Requirements
 
-- ✅ Code phải chạy được không có lỗi
-- ✅ Follow Clean Architecture như đã học
-- ✅ Có error handling đầy đủ
-- ✅ Test được bằng curl hoặc Postman
-
----
-
-## 📤 Nộp Bài
-
-### Cần nộp:
-
-**File `SUBMISSION.md`** hoặc **`SUBMISSION.pdf`** gồm:
-
-```markdown
-# Homework Submission
-
-**Họ tên:** [Tên của bạn]
-
-## Các bài đã hoàn thành
-
-- [x] Bài 1: Statistics APIs
-- [x] Bài 2: Batch Create
-- [x] Bài 3: Batch Delete
-- [x] Bài 4: Connection Retry
-- [x] Bài 5: Health Check
-- [ ] Bài 6: Pagination (Bonus)
-- [ ] Bài 7: Search (Bonus)
-```
-
-Mỗi bài cần 1 file Test screenshots hoặc command outputs chứng minh
-File này đặt trong thư mục [homeworks/submissions](../submissions/)
+- Code must execute correctly without errors.
+- Follow Clean Architecture patterns as taught.
+- Include proper error handling.
+- Testable using `curl` or Postman.
 
 ---
 
-## Bài 1: Statistics APIs (20 điểm)
+## How to Submit
 
-**Yêu cầu:** Implement API để lấy thống kê về assets
+### Requirements:
+Push your code to the `homework` branch, open a PR to `main`, and add `dinhmanhtan` as reviewer.
+
+---
+
+## Exercise 1: Statistics APIs (20 pts)
 
 ### 1.1 Get Assets Statistics
 
 - **Endpoint:** `GET /assets/stats`
-- **Response:** 200 OK
+- **Description:** Aggregates statistics of total assets grouped by type and status.
+- **Response:** `200 OK`
   ```json
   {
     "total": 150,
     "by_type": {
-      "domain": 100,
-      "ip": 40,
-      "service": 10
+      "domain": 50,
+      "ip": 80,
+      "service": 20
     },
     "by_status": {
       "active": 120,
@@ -88,70 +67,48 @@ File này đặt trong thư mục [homeworks/submissions](../submissions/)
 ### 1.2 Count Assets by Filter
 
 - **Endpoint:** `GET /assets/count`
-- **Query params:** `type`, `status` (optional)
-- **Response:** 200 OK
+- **Query params:** `?type=domain&status=active` (both optional)
+- **Response:** `200 OK`
   ```json
   {
-    "count": 85,
-    "filters": {
-      "type": "domain",
-      "status": "active"
-    }
+    "count": 45
   }
   ```
-
-**Test:**
-
-```bash
-# Get statistics
-curl http://localhost:8080/assets/stats
-
-# Count all
-curl http://localhost:8080/assets/count
-
-# Count by type
-curl "http://localhost:8080/assets/count?type=domain"
-
-# Count by type and status
-curl "http://localhost:8080/assets/count?type=domain&status=active"
-```
 
 ---
 
-## Bài 2: Batch Create Assets (25 điểm)
+## Exercise 2: Batch Create Assets (25 pts)
 
-**Yêu cầu:** Tạo nhiều assets cùng lúc trong 1 transaction
-
-### API Specification
+**Requirement:** Add multiple assets in a single request. Must use **Database Transactions** to ensure ACID properties (All-or-Nothing). If one asset fails validation, the entire batch must rollback.
 
 - **Endpoint:** `POST /assets/batch`
-- **Request body:**
+- **Request Body:**
   ```json
   {
     "assets": [
-      { "name": "domain1.com", "type": "domain" },
-      { "name": "domain2.com", "type": "domain" },
-      { "name": "192.168.1.1", "type": "ip" }
+      {"name":"google.com","type":"domain"},
+      {"name":"1.1.1.1","type":"ip"},
+      {"name":"nginx","type":"service"}
     ]
   }
   ```
-- **Response:** 201 Created
+- **Response:** `201 Created`
   ```json
   {
     "created": 3,
-    "ids": ["uuid-1", "uuid-2", "uuid-3"]
+    "assets": [
+      {"id":"uuid-1","name":"google.com","type":"domain","status":"active"},
+      {"id":"uuid-2","name":"1.1.1.1","type":"ip","status":"active"},
+      {"id":"uuid-3","name":"nginx","type":"service","status":"active"}
+    ]
   }
   ```
 
-### Yêu cầu kỹ thuật:
+**Validation rules:**
+- `name` cannot be empty.
+- `type` must be one of: `domain`, `ip`, `service`.
 
-- Sử dụng **database transaction** (all or nothing)
-- Nếu 1 asset validation fail → rollback tất cả
-- Limit tối đa 100 assets/request
-- Validate từng asset trước khi insert
-
-**Test:**
-
+**Test Cases:**
 ```bash
 # Success case
 curl -X POST http://localhost:8080/assets/batch \
@@ -177,15 +134,15 @@ curl -X POST http://localhost:8080/assets/batch \
 
 ---
 
-## Bài 3: Batch Delete Assets (20 điểm)
+## Exercise 3: Batch Delete Assets (20 pts)
 
-**Yêu cầu:** Xóa nhiều assets cùng lúc
+**Requirement:** Delete multiple assets concurrently.
 
 ### API Specification
 
 - **Endpoint:** `DELETE /assets/batch`
 - **Query params:** `?ids=uuid1,uuid2,uuid3`
-- **Response:** 200 OK
+- **Response:** `200 OK`
   ```json
   {
     "deleted": 3,
@@ -194,13 +151,11 @@ curl -X POST http://localhost:8080/assets/batch \
   ```
 
 ### Behavior:
-
-- Xóa tất cả IDs hợp lệ
-- Bỏ qua IDs không tồn tại (không trả lỗi)
-- Return số lượng đã xóa và không tìm thấy
+- Deletes all valid IDs.
+- Ignores non-existing IDs (do not return an error).
+- Returns the number of successfully deleted assets and not found counts.
 
 **Test:**
-
 ```bash
 # Create test assets first
 ID1=$(curl -s -X POST http://localhost:8080/assets \
@@ -224,46 +179,43 @@ curl http://localhost:8080/assets/$ID1
 
 ---
 
-## Bài 4: Database Connection Retry (25 điểm) ⭐
+## Exercise 4: Database Connection Retry (25 pts)
 
-**Yêu cầu:** Server phải tự động retry khi connect DB thất bại
+**Requirement:** The Server must automatically retry connecting to the Database if the initial connection fails.
 
 ### Specification:
-
-- Retry tối đa **5 lần**
-- Exponential backoff: **1s → 2s → 4s → 8s → 16s**
-- Log rõ ràng từng attempt
-- Nếu hết 5 lần vẫn fail → exit với error message
+- Max retries: **5 times**.
+- Exponential backoff: **1s ➡️ 2s ➡️ 4s ➡️ 8s ➡️ 16s**.
+- Log details of each attempt.
+- If all 5 attempts fail, exit the application with an error message.
 
 ### Expected Logs:
-
 ```
-🔄 Database connection attempt 1/5...
-⚠️  Connection failed: connection refused. Retrying in 1s...
-🔄 Database connection attempt 2/5...
-⚠️  Connection failed: connection refused. Retrying in 2s...
-🔄 Database connection attempt 3/5...
-✅ Database connected successfully!
+[*] Database connection attempt 1/5...
+[!] Connection failed: connection refused. Retrying in 1s...
+[*] Database connection attempt 2/5...
+[!] Connection failed: connection refused. Retrying in 2s...
+[*] Database connection attempt 3/5...
+[+] Database connected successfully!
 ```
 
 ### Hints:
-
-- Tạo file `internal/database/retry.go`
+- Create file `internal/database/retry.go`
 - Function: `ConnectWithRetry(dsn string, maxRetries int) (*sql.DB, error)`
 - Exponential backoff: `time.Sleep(time.Duration(1<<uint(attempt-1)) * time.Second)`
 
 ---
 
-## Bài 5: Database Health Check (15 điểm)
+## Exercise 5: Database Health Check (15 pts)
 
-**Yêu cầu:** Nâng cấp `/health` endpoint với thông tin database
+**Requirement:** Upgrade `/health` endpoint to return database status details.
 
 ### API Specification
 
 - **Endpoint:** `GET /health`
 - **Response:**
-  - 200 OK (nếu DB connected)
-  - 503 Service Unavailable (nếu DB down)
+  - `200 OK` (if DB is connected)
+  - `503 Service Unavailable` (if DB is down)
 
   ```json
   {
@@ -280,13 +232,11 @@ curl http://localhost:8080/assets/$ID1
   ```
 
 ### Implementation hints:
-
-- Update `HealthHandler` để nhận `*sql.DB`
-- Dùng `db.Ping()` để check connection
-- Dùng `db.Stats()` để lấy connection pool info
+- Update `HealthHandler` to receive `*sql.DB`.
+- Use `db.Ping()` to check connection.
+- Use `db.Stats()` to fetch connection pool information.
 
 **Test:**
-
 ```bash
 # Normal operation
 curl http://localhost:8080/health | jq
@@ -306,9 +256,9 @@ curl http://localhost:8080/health
 
 ---
 
-## Bài 6: Pagination & Filtering (15 điểm) - BONUS 🌟
+## Exercise 6: Pagination & Filtering (15 pts) - BONUS
 
-**Yêu cầu:** Thêm phân trang và filter cho list assets
+**Requirement:** Add server-side pagination and filtering for listing assets.
 
 ### API Specification
 
@@ -333,7 +283,6 @@ curl http://localhost:8080/health
   ```
 
 ### SQL hints:
-
 ```sql
 SELECT * FROM assets
 WHERE type = $1 AND status = $2
@@ -342,7 +291,6 @@ LIMIT $3 OFFSET $4
 ```
 
 **Test:**
-
 ```bash
 # Page 1, 10 items
 curl "http://localhost:8080/assets?page=1&limit=10"
@@ -356,19 +304,18 @@ curl "http://localhost:8080/assets?page=2&limit=20&type=domain&status=active"
 
 ---
 
-## Bài 7: Search by Name (10 điểm) - BONUS 🌟
+## Exercise 7: Search by Name (10 pts) - BONUS
 
-**Yêu cầu:** Tìm kiếm assets theo tên (partial match)
+**Requirement:** Search assets by name (partial match).
 
 ### API Specification
 
 - **Endpoint:** `GET /assets/search`
 - **Query params:** `q` (search query, required)
 - **Response:** Array of matching assets (max 100)
-- **Behavior:** Case-insensitive, partial match
+- **Behavior:** Case-insensitive, partial matching.
 
 ### SQL hints:
-
 ```sql
 SELECT * FROM assets
 WHERE name ILIKE $1
@@ -376,7 +323,6 @@ LIMIT 100
 ```
 
 **Test:**
-
 ```bash
 # Search for "example"
 curl "http://localhost:8080/assets/search?q=example"
@@ -390,26 +336,25 @@ curl "http://localhost:8080/assets/search?q=DOMAIN"
 
 ---
 
-## 📊 Chấm Điểm
+## Grading Rubric
 
-| Bài Tập                 | Điểm    | Bắt Buộc    |
-| ----------------------- | ------- | ----------- |
-| Bài 1: Statistics       | 20      | ✅ Bắt buộc |
-| Bài 2: Batch Create     | 25      | ✅ Bắt buộc |
-| Bài 3: Batch Delete     | 20      | ✅ Bắt buộc |
-| Bài 4: Connection Retry | 25      | ✅ Bắt buộc |
-| Bài 5: Health Check     | 15      | ✅ Bắt buộc |
-| Bài 6: Pagination       | 15      | 🌟 Bonus    |
-| Bài 7: Search           | 10      | 🌟 Bonus    |
-| **Tổng bắt buộc**       | **105** |             |
-| **Tổng có bonus**       | **130** |             |
+| Exercise | Score | Required / Optional |
+| :--- | :--- | :--- |
+| Exercise 1: Statistics | 20 | Required |
+| Exercise 2: Batch Create | 25 | Required |
+| Exercise 3: Batch Delete | 20 | Required |
+| Exercise 4: Connection Retry | 25 | Required |
+| Exercise 5: Health Check | 15 | Required |
+| Exercise 6: Pagination | 15 | Bonus |
+| Exercise 7: Search | 10 | Bonus |
+| **Total Required** | **105** | |
+| **Total with Bonus** | **130** | |
 
 ---
 
-## 💡 Gợi Ý & Tips
+## Hints & Tips
 
-### Transaction trong Go:
-
+### Database Transactions in Go:
 ```go
 tx, err := db.Begin()
 if err != nil {
@@ -426,8 +371,7 @@ if err != nil {
 return tx.Commit() // Success
 ```
 
-### Dynamic SQL với filters:
-
+### Dynamic SQL with filters:
 ```go
 conditions := []string{}
 args := []interface{}{}
@@ -448,47 +392,25 @@ query := fmt.Sprintf("SELECT * FROM assets %s", whereClause)
 rows, err := db.Query(query, args...)
 ```
 
-### Parse query string IDs:
-
-```go
-idsParam := r.URL.Query().Get("ids")
-if idsParam == "" {
-    return nil, errors.New("ids parameter required")
-}
-
-ids := strings.Split(idsParam, ",")
-// ids = ["uuid1", "uuid2", "uuid3"]
-```
-
-### Count query:
-
-```go
-var count int
-query := "SELECT COUNT(*) FROM assets WHERE type = $1"
-err := db.QueryRow(query, assetType).Scan(&count)
-```
-
 ---
 
-## 📚 Tài Liệu Tham Khảo
+## Reference Materials
 
 - [PostgreSQL Transactions](https://www.postgresql.org/docs/current/tutorial-transactions.html)
 - [Connection Pooling Best Practices](https://www.alexedwards.net/blog/configuring-sqldb)
 - [SQL Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
 - [RESTful API Design](https://restfulapi.net/)
 
-## 🚀 Bonus Challenges
+## Bonus Challenges
 
-1. **Rate Limiting:** Giới hạn số request/phút từ mỗi IP
-2. **Caching:** Cache list assets trong memory (5 phút)
-3. **Audit Log:** Log mọi CREATE/UPDATE/DELETE vào bảng audit
-4. **Soft Delete:** Thêm `deleted_at` timestamp thay vì xóa hẳn
-5. **Import CSV:** Upload file CSV để tạo nhiều assets
-6. **Export CSV:** Download assets dưới dạng CSV
-7. **Webhooks:** Gọi webhook khi có asset mới được tạo
-
----
-
-**Chúc các bạn làm bài tốt! Có thắc mắc hỏi trên group nhé! 🚀**
+1. **Rate Limiting:** Limit requests per minute per IP address.
+2. **Caching:** Cache the list of assets in-memory (e.g. 5 minutes).
+3. **Audit Log:** Log every CREATE/UPDATE/DELETE action into an audit table.
+4. **Soft Delete:** Support a `deleted_at` timestamp instead of physically deleting.
+5. **Import CSV:** Support uploading a CSV file to create multiple assets.
+6. **Export CSV:** Export assets under a CSV format.
+7. **Webhooks:** Trigger a webhook whenever a new asset is registered.
 
 ---
+
+**Good luck with the assignment! Ask on the group channel if you have any questions!**

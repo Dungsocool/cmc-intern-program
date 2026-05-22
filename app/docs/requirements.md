@@ -6,19 +6,19 @@
 
 ### 1.1 Purpose
 
-Tài liệu này mô tả yêu cầu cho hệ thống Mini Attack Surface Management (ASM) — một service giúp quản lý các tài sản (assets) public-facing của tổ chức.
+This document describes the requirements for the Mini Attack Surface Management (ASM) system — a service designed to manage the organization's public-facing assets.
 
-Hệ thống phục vụ mục đích:
+The system serves the following purposes:
 
-- Theo dõi domain, IP, service đang public
-- Quản lý trạng thái hoạt động
-- Là nền tảng để mở rộng sang security monitoring
+- Tracking public-facing domains, IPs, and services
+- Managing operational status
+- Serving as a platform to extend into security monitoring
 
 ### 1.2 Definitions
 
 | Term  | Meaning                                     |
 | ----- | ------------------------------------------- |
-| Asset | Một tài nguyên public (domain, IP, service) |
+| Asset | A public resource (domain, IP, service)     |
 | ASM   | Attack Surface Management                   |
 | MVP   | Minimum Viable Product                      |
 
@@ -26,7 +26,7 @@ Hệ thống phục vụ mục đích:
 
 ### 2.1 Product Perspective
 
-Hệ thống hoạt động độc lập, có thể được tích hợp với:
+The system operates independently and can be integrated with:
 
 - Monitoring tools
 - Scanner tools
@@ -38,91 +38,91 @@ Hệ thống hoạt động độc lập, có thể được tích hợp với:
 
 **FR-1: Create Asset**
 
-- Hệ thống phải cho phép tạo mới một asset
-- Validate input (name không empty, type hợp lệ)
-- Tự động generate UUID cho asset
-- Tự động set created_at timestamp
-- Default status là "active"
+- The system must allow creating a new asset
+- Validate input (non-empty name, valid type)
+- Automatically generate UUID for the asset
+- Automatically set the created_at timestamp
+- Default status is "active"
 
 **FR-2: List Assets**
 
-- Hệ thống phải trả về danh sách toàn bộ asset
-- Sắp xếp theo thời gian tạo (mới nhất trước)
+- The system must return a list of all assets
+- Sorted by creation time (newest first)
 
 **FR-3: Get Single Asset**
 
-- Hệ thống phải cho phép lấy thông tin chi tiết một asset theo ID
-- Trả về 404 nếu không tìm thấy
+- The system must allow retrieving detailed asset information by ID
+- Return 404 if not found
 
 **FR-4: Update Asset**
 
-- Hệ thống phải cho phép cập nhật thông tin asset
-- Có thể cập nhật: name, type, status
-- Không cho phép thay đổi: id, created_at
-- Trả về 404 nếu không tìm thấy
+- The system must allow updating asset details
+- Updatable fields: name, type, status
+- Do not allow changing: id, created_at
+- Return 404 if not found
 
 **FR-5: Delete Asset**
 
-- Hệ thống phải cho phép xóa asset theo ID
-- Trả về 404 nếu không tìm thấy
+- The system must allow deleting an asset by ID
+- Return 404 if not found
 
 **FR-6: Filter Assets**
 
-- Hệ thống phải hỗ trợ filter theo type
-- Hệ thống phải hỗ trợ filter theo status
-- Có thể combine nhiều filters
+- The system must support filtering by type
+- The system must support filtering by status
+- Multiple filters can be combined
 
 **FR-7: Search Assets**
 
-- Hệ thống phải hỗ trợ search theo name (partial match)
+- The system must support searching by name (partial match)
 
 **FR-8: Health Check**
 
-- Hệ thống phải cung cấp endpoint kiểm tra trạng thái service
+- The system must provide an endpoint to check the service health status
 - Check database connection
 
 ## 4. NON-FUNCTIONAL REQUIREMENTS
 
 ### 4.1 Performance
 
-- Hệ thống phải xử lý ít nhất 100 request/giây trong môi trường local
-- Response time trung bình < 200ms
+- The system must handle at least 100 requests/second in a local environment
+- Average response time < 200ms
 
 ### 4.2 Security
 
-- Không trả stack trace ra client
-- Validate input đầy đủ
-- Không panic
-- Không expose internal struct
+- Do not return stack traces to the client
+- Perform comprehensive input validation
+- Prevent application panic
+- Do not expose internal structs
 
 ### 4.3 Maintainability
 
-- Phải có cấu trúc project rõ ràng
+- Must have a clear project structure
 - Separation of concerns (handler/service/storage)
-- Code phải tuân thủ clean code
-- Naming rõ ràng
+- Code must adhere to clean code principles
+- Clear naming conventions
 
 ### 4.4 Logging
 
-- Log mỗi HTTP request
-- Log error rõ ràng
-- Không log sensitive data
+- Log every HTTP request
+- Log errors clearly
+- Do not log sensitive data
 
 ### 4.5 API Design
 
-- Sử dụng RESTful convention
-- Sử dụng HTTP status code đúng:
-  - 200 OK - Request thành công
-  - 201 Created - Resource được tạo thành công
-  - 400 Bad Request - Input không hợp lệ
-  - 404 Not Found - Resource không tồn tại
-  - 500 Internal Server Error - Lỗi server
+- Use RESTful conventions
+- Use appropriate HTTP status codes:
+  - 200 OK - Request succeeded
+  - 201 Created - Resource created successfully
+  - 400 Bad Request - Invalid input
+  - 404 Not Found - Resource does not exist
+  - 500 Internal Server Error - Server error
 
 ### 4.6 Testing
 
 - Unit test coverage ≥ 70%
-- Integration tests cho tất cả endpoints
-- Test cases cho edge cases và error scenarios
+- Integration tests for all endpoints
+- Test cases for edge cases and error scenarios
 
 ## 5. DATA MODEL
 
@@ -137,7 +137,7 @@ Hệ thống hoạt động độc lập, có thể được tích hợp với:
 | created_at | timestamp     | Creation time     | Yes      | Auto-generated                         |
 | updated_at | timestamp     | Last update time  | No       | Auto-updated                           |
 
-**Ví dụ:**
+**Example:**
 
 ```json
 {
@@ -172,40 +172,40 @@ mini-asm/
 
 ## 7. LEARNING OBJECTIVES
 
-### Buổi 1: Foundation & Theory
+### Session 1: Foundation & Theory
 
-- Hiểu software development lifecycle
-- Sử dụng Git cơ bản (clone, commit, push, pull)
-- Nắm được Go syntax và conventions
+- Understand software development lifecycle
+- Use basic Git operations (clone, commit, push, pull)
+- Master Go syntax and conventions
 
-### Buổi 2: API Development Basics
+### Session 2: API Development Basics
 
-- Thiết lập Go project structure
-- Implement HTTP server với standard library
+- Set up Go project structure
+- Implement HTTP server using the standard library
 - Implement in-memory storage
-- Create và test RESTful endpoints
+- Create and test RESTful endpoints
 
-### Buổi 3: Database Integration
+### Session 3: Database Integration
 
-- Connect Go application với database
-- Implement CRUD với SQL
-- Sử dụng database migration tools
+- Connect Go application to a database
+- Implement CRUD using SQL
+- Use database migration tools
 
-### Buổi 4: Advanced Features
+### Session 4: Advanced Features
 
-- Complete REST API với full CRUD
-- Implement filtering và searching
+- Complete REST API with full CRUD
+- Implement filtering and searching
 - Advanced validation
 
-### Buổi 5: Quality Assurance
+### Session 5: Quality Assurance
 
-- Viết unit tests với Go testing package
+- Write unit tests using Go's testing package
 - Integration testing strategies
 - Error handling patterns
 
-### Buổi 6: Integration & Deployment
+### Session 6: Integration & Deployment
 
-- Integrate backend với simple frontend
-- API documentation với OpenAPI
-- Containerize với Docker
-- Deploy to local/cloud environment
+- Integrate backend with a simple frontend
+- API documentation using OpenAPI
+- Containerize with Docker
+- Deploy to local/cloud environments
